@@ -1,0 +1,20 @@
+.row
+  .col-sm-6
+    #top-company-graph{"top_company_graph" => ""}
+  .col-sm-6
+    .panel.panel-default
+      .panel-heading.font-bold
+        Investments
+      .table-responsive{"cg-busy"=>"topFirmsPromise"}
+        %table.table.table-striped.b-t.b-light
+          %thead
+            %tr
+              %th Top Firms
+              %th YTD
+          %tbody
+            %tr{"ng-repeat" => "investment in datatopFirmInvestments"}
+              %td {{investment.name}}
+              %td {{investment.ytd}}
+
+
+

@@ -1,0 +1,82 @@
+<%= javascript_include_tag "admin-companies" %>
+<div class="col-md-12">
+  <div class="col-md-6">
+    <div class="form-group">
+      <%= f.label :name, class: "control-label col-sm-4" do %>
+        Name <i class="fa fa-star"></i>
+      <% end %>
+      <div class="col-sm-8">
+        <%= f.text_field :name, class: "form-control" %>
+      </div>
+    </div>
+    <%= f.fields_for :company_sectors do |sector| %>
+    <div class="form-group">
+      <%= sector.label :sector_id, class: "control-label col-sm-4" do %>
+        Sector <i class="fa fa-star"></i>
+      <% end %>
+      <div class="col-sm-8">
+        <%= sector.select(:sector_id, Sector.all.collect {|u| [u.name, u.id]}, { :prompt => 'Please Select'} , { class: "form-control" }) %>
+      </div>
+    </div>
+    <% end %>
+    <div class="form-group">
+      <%= f.label :employees_count, class: "control-label col-sm-4" do %>
+      Employees Count
+      <% end %>
+      <div class="col-sm-8">
+        <%= f.text_field :employees_count, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :established_date, class: "control-label col-sm-4" do %>
+        Established Date
+      <% end %>
+      <div class="col-sm-8">
+        <%= f.date_field :established_date, class: "form-control", max: Date.today.to_s %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :email, class: "control-label col-sm-4" do %>
+       Email <i class="fa fa-star"></i>
+      <% end %>
+      <div class="col-sm-8">
+        <%= f.email_field :email, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :revenue, class: "control-label col-sm-4" do %>
+        Revenue
+      <% end %>
+      <div class="col-sm-8">
+        <%= f.text_field :revenue, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :company_type_id, class: "control-label col-sm-4" do %>
+       Company Type <i class="fa fa-star"></i>
+      <% end %>
+      <div class="col-sm-8">
+        <%= f.select(:company_type_id, CompanyType.all.collect {|u| [u.name, u.id]}, { :prompt => 'Please Select'} , { class: "form-control" }) %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :hiring, class: "control-label col-sm-4" %>
+      <div class="col-sm-2">
+        <%= f.check_box :hiring %>
+      </div>
+      <%= f.label :fund_raising, class: "control-label col-sm-4" %>
+      <div class="col-sm-2">
+        <%= f.check_box :fund_raising %>
+      </div>
+    </div>
+    <%= render 'company_location', f: f %>
+    <%= render 'company_phone', f: f %>
+  </div>
+</div>
+
+<div class="form-group">
+  <div class="col-sm-offset-4 col-sm-5">
+    <%= f.submit 'Save', class: "btn btn-success" %>
+    <%= link_to 'Back', admin_companies_path, class: "btn btn-default" %>
+  </div>
+</div>

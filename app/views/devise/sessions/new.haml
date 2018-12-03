@@ -1,0 +1,32 @@
+/ ******Login Section******
+%section.login-section.access-section.section
+  .container
+    .row
+      .form-box.col-sm-6.col-md-4.col-md-offset-4
+        .form-box-inner
+          %h2.text-center Log in to MergerHub
+          = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+            = devise_error_messages!
+            .row
+              .form-container
+                %form.login-form
+                  .form-group.user_name_icon
+                    = f.email_field :email, autofocus: true, class: "form-control", placeholder: "Email", type: "email"
+                  / //form-group
+                  .form-group.password
+                    = f.password_field :password, autocomplete: "off", class: "form-control", placeholder: "Password", type: "password"
+                    %p.forgot-password
+                  .form-group
+                    = f.submit "Log in", class: "col-md-offset-2 btn btn-success"
+                    %a.btn.btn-warning{:href => "/"} Cancel
+                  - if devise_mapping.rememberable?
+                    .checkbox.remember
+                      %label
+                        = f.check_box :remember_me
+                        Remember Me
+                  / //checkbox
+                  = link_to "Forgot password?", new_password_path(resource_name)
+                  %p.lead
+                    Don't have a MergerHub account yet?
+                    %br/
+                    %a.signup-link{:href => "/users/sign_up"} Create your account now

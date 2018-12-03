@@ -1,0 +1,88 @@
+<div class="blog blog-category blog-archive container">
+  <div class="blog-category">
+    <div class="row col-lg-12">
+      <h1></h1>
+      <div class="panel panel-default">
+        <div class="panel-heading">Job Information
+        </div>
+        <div class="panel-body">
+          <form class="form-horizontal" role="form">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label class="control-label col-sm-4">Company Name:</label>
+                <div class="col-sm-8 form-control-static">
+                  <strong><%= @job_portal.company.name if @job_portal.company %></strong>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="control-label col-sm-4">Job Title:</label>
+                <div class="col-sm-8 form-control-static">
+                  <strong><%= @job_portal.title %></strong>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="control-label col-sm-4">Sector:</label>
+                <div class="col-sm-8 form-control-static">
+                  <%= @job_portal.sector_name.titleize if @job_portal.sector_name.present? %>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="control-label col-sm-4">Geography:</label>
+                <div class="col-sm-8 form-control-static">
+                  <%= @job_portal.geo.name if @job_portal.geo %>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="control-label col-sm-4">Summary:</label>
+                <div class="col-sm-8 form-control-static">
+                  <%= @job_portal.summary %>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="control-label col-sm-4">Requirements:</label>
+                <div class="col-sm-8 form-control-static">
+                  <%= @job_portal.requirement %>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="control-label col-sm-4">Company Email:</label>
+                <div class="col-sm-8 form-control-static">
+                  <%= @job_portal.email %>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="control-label col-sm-4">Website:</label>
+                <div class="col-sm-8 form-control-static">
+                  <%= @job_portal.website %>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="control-label col-sm-4">Posted Date:</label>
+                <div class="col-sm-8 form-control-static">
+                  <%= @job_portal.created_at %>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="control-label col-sm-4">Company Address:</label>
+                <div class="col-sm-8 form-control-static">
+                  <% if @job_portal.location.present? %>
+                  <div><%= @job_portal.location.street %></div>
+                  <div><%= @job_portal.location.city %></div>
+                  <div><%= @job_portal.location.state %></div>
+                  <div><%= @job_portal.location.country %></div>
+                  <div><%= @job_portal.location.pin_code %></div>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-offset-4 col-sm-5">
+                <%= link_to 'Back', job_portals_path, class: "btn btn-default" %>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

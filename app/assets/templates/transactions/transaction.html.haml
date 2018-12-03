@@ -1,0 +1,202 @@
+.blog.blog-category.blog-archive.container.search-panel
+  .panel.panel-default
+    .panel-heading Transaction Search
+    .panel-body
+      .form-horizontal
+        .row
+          .col-sm-4
+            .form-group
+              %label.col-md-3.control-label{:for => "inputName"} From
+              .col-md-9
+                %ui-select{"ng-model" => "search.selectedFromYear", :theme => "bootstrap"}
+                  %ui-select-match{:placeholder => "Select Year..."} {{$select.selected}}
+                  %ui-select-choices{:repeat => "year in years | filter: $select.search track by year"}
+                    %span{"ng-bind-html" => "year | highlight: $select.search"}
+          .col-sm-4
+            .form-group
+              %label.col-md-3.control-label{:for => "inputName"} To
+              .col-md-9
+                %ui-select{"ng-model" => "search.selectedToYear", :theme => "bootstrap"}
+                  %ui-select-match{:placeholder => "Select Year..."} {{$select.selected}}
+                  %ui-select-choices{:repeat => "year in years | filter: $select.search track by year"}
+                    %span{"ng-bind-html" => "year | highlight: $select.search"}
+          .col-sm-4
+            .form-group
+              %label.col-md-3.control-label{:for => "inputName"} Sector
+              .col-md-9
+                %ui-select{"ng-model" => "search.selectedSector", :theme => "bootstrap"}
+                  %ui-select-match{:placeholder => "Enter sector..."} {{$select.selected.name}}
+                  %ui-select-choices{:repeat => "sector.id as sector in sectors | filter: $select.search track by sector.name"}
+                    %span{"ng-bind-html" => "sector.name | highlight: $select.search"}
+        .row
+          .col-sm-4
+            .form-group
+              %label.col-md-3.control-label{:for => "inputName"} Target Company
+              .col-md-9
+                %ui-select{"ng-model" => "search.selectedCompany", :theme => "bootstrap"}
+                  %ui-select-match{:placeholder => "Enter Company..."} {{$select.selected.name}}
+                  %ui-select-choices{:repeat => "company.id as company in companies | filter: { name:$select.search } track by $index"}
+                    %span{"ng-bind-html" => "company.name | highlight: $select.search"}
+          .col-sm-4
+            .form-group
+              .col-md-3
+              .col-md-9
+                %button.btn.btn-info{"ng-click" => "submitTransaction()"} Search
+                %button.btn.btn-default{"ng-click" => "clearTransaction()"} Clear
+  .panel.panel-default
+    .panel-body
+      %tabset.tab-container{"id"=>"dashboard-tabs"}
+        %tab{"id"=>"firms","ng-click" => "firmsInvestments()"}
+          %tab-heading
+            Transactions ({{transactions.length}})
+          %div
+            #content
+              .panel.panel-default
+                .panel-body
+                  #my-tab-content.tab-content
+                    #people-network.tab-pane.active
+                      .blog
+                        .row
+                          .blog-list.blog-category-list
+                            %article.post.col-md-12.col-sm-12.col-xs-12
+                              .post-inner
+                                .table-responsive
+                                  %table#transaction-table.table.table-striped.b-t.b-light
+                                    %thead
+                                      %tr
+                                        %th Date
+                                        %th Target
+                                        %th Sector
+                                        %th Value
+                                        %th Transaction Type
+                                        %th Investors/Sellers
+                                    %tbody{"cg-busy"=>"getTransactionpromise"}
+                                      %tr{"dir-paginate" => "transaction in transactions | itemsPerPage:25: 'paginateTransaction'", "pagination-id"=>"paginateTransaction"}
+                                        %td {{transaction.date}}
+                                        %td.pointer{ "ng-click" => "redirectOraganizationPage(transaction.target_id)" } {{transaction.target}}
+                                        %td {{transaction.sector}}
+                                        %td {{transaction.value}}
+                                        %td {{transaction.transaction_type}}
+                                        %td
+                                          %p.pointer{"ng-if" => "transaction.buyers.length != 0", "ng-repeat" => "buyer in transaction.buyers", "ng-click" => "redirectOraganizationPage(buyer.id)" }
+                                            %b
+                                              Investor
+                                            {{buyer.name}}
+                                          %p.pointer{ "ng-if" => "transaction.sellers.length != 0", "ng-repeat" => "seller in transaction.sellers", "ng-click" => "redirectOraganizationPage(seller.id)" }
+                                            %b
+                                              Seller
+                                            {{seller.name}}
+                                      %tr{"ng-if" => "transactions.length == 0"}
+                                        %td{"colspan"=>6, "style" =>"text-align:center;"}
+                                          No record found
+                                    %tfoot
+                                      %tr
+                                        %td.text-right{"colspan"=>"6"}
+                                          %dir-pagination-controls{"pagination-id"=>"paginateTransaction"}
+
+        %tab{"id"=>"corporates", "ng-click" => "corporateInvestments()"}
+          %tab-heading
+            Private equity firms ({{firms.length}})
+          %div
+            #content
+              .panel.panel-default
+                .panel-body
+                  #my-tab-content.tab-content
+                    #people-network.tab-pane.active
+                      .blog
+                        .row
+                          .blog-list.blog-category-list
+                            %article.post.col-md-12.col-sm-12.col-xs-12
+                              .post-inner
+                                .table-responsive
+                                  %table#transaction-table.table.table-striped.b-t.b-light
+                                    %thead
+                                      %tr
+                                        %th Name
+                                        %th Address
+                                        %th Team
+                                        %th PE Assets
+                                    %tbody{"cg-busy"=>"getTransactionpromise"}
+                                      %tr{"dir-paginate" => "firm in firms | itemsPerPage:25: 'paginateAdvisor'", "pagination-id"=>"paginateAdvisor"}
+                                        %td.pointer{ "ng-click" => "redirectOraganizationPage(firm.company_id)" } {{firm.firm_name}}
+                                        %td {{firm.location}}
+                                        %td {{firm.team}}
+                                        %td {{firm.pe_assets}}
+                                      %tr{"ng-if" => "firms.length == 0"}
+                                        %td{"colspan"=>4, "style" =>"text-align:center;"}
+                                          No record found
+                                    %tfoot
+                                      %tr
+                                        %td.text-right{"colspan"=>"4"}
+                                          %dir-pagination-controls{"pagination-id"=>"paginateAdvisor"}
+
+
+        %tab{"id"=>"banks", "ng-click" => "bankMAEngagements()"}
+          %tab-heading
+            Companies ({{companyList.length}})
+          %div
+            #content
+              .panel.panel-default
+                .panel-body
+                  #my-tab-content.tab-content
+                    #people-network.tab-pane.active
+                      .blog
+                        .row
+                          .blog-list.blog-category-list
+                            %article.post.col-md-12.col-sm-12.col-xs-12
+                              .post-inner
+                                .table-responsive
+                                  %table#transaction-table.table.table-striped.b-t.b-light
+                                    %thead
+                                      %tr
+                                        %th Name
+                                        %th Address
+                                        %th Sector
+                                        %th Revenue
+                                    %tbody{"cg-busy"=>"getTransactionpromise"}
+                                      %tr{"dir-paginate" => "company in companyList | itemsPerPage:25: 'paginateAdvisor'", "pagination-id"=>"paginateAdvisor"}
+                                        %td.pointer{ "ng-click" => "redirectOraganizationPage(company.company_id)" } {{company.company_name}}
+                                        %td {{company.location}}
+                                        %td {{company.sector}}
+                                        %td {{company.revenue}}
+                                      %tr{"ng-if" => "companyList.length == 0"}
+                                        %td{"colspan"=>4, "style" =>"text-align:center;"}
+                                          No record found
+                                    %tfoot
+                                      %tr
+                                        %td.text-right{"colspan"=>"4"}
+                                          %dir-pagination-controls{"pagination-id"=>"paginateAdvisor"}
+
+        %tab{"id"=>"lawFirms","ng-click" => "lawFirms()"}
+          %tab-heading
+            Advisors ({{advisors.length}})
+          %div
+            #content
+              .panel.panel-default
+                .panel-body
+                  #my-tab-content.tab-content
+                    #people-network.tab-pane.active
+                      .blog
+                        .row
+                          .blog-list.blog-category-list
+                            %article.post.col-md-12.col-sm-12.col-xs-12
+                              .post-inner
+                                .table-responsive
+                                  %table#transaction-table.table.table-striped.b-t.b-light
+                                    %thead
+                                      %tr
+                                        %th Name
+                                        %th Type
+                                        %th HQ
+                                    %tbody{"cg-busy"=>"getTransactionpromise"}
+                                      %tr{"dir-paginate" => "advisor in advisors | itemsPerPage:25: 'paginateAdvisor'", "pagination-id"=>"paginateAdvisor"}
+                                        %td.pointer{ "ng-click" => "redirectOraganizationPage(advisor.company_id)" } {{advisor.advisor_name}}
+                                        %td {{advisor.type}}
+                                        %td {{advisor.hq}}
+                                      %tr{"ng-if" => "advisors.length == 0"}
+                                        %td{"colspan"=>3, "style" =>"text-align:center;"}
+                                          No record found
+                                    %tfoot
+                                      %tr
+                                        %td.text-right{"colspan"=>"3"}
+                                          %dir-pagination-controls{"pagination-id"=>"paginateAdvisor"}

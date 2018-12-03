@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  advisor_id: 1
+  company_id: 1
+  type: 
+  engagement: 1
+
+two:
+  advisor_id: 1
+  company_id: 1
+  type: 
+  engagement: 1

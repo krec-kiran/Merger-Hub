@@ -1,0 +1,81 @@
+<div class="blog blog-category blog-archive container">
+  <div class="blog-category">
+    <div class="row col-lg-12">
+      <h1></h1>
+      <div class="panel panel-default">
+        <div class="panel-heading">Site Information
+        </div>
+        <div class="panel-body">
+          <form class="form-horizontal" role="form">
+            <div class="col-md-12">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="control-label col-sm-4">Name:</label>
+                  <div class="col-sm-8 form-control-static">
+                    <%= @site.name %>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="control-label col-sm-4">URL:</label>
+                  <div class="col-sm-8 form-control-static">
+                    <%= @site.url %>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="control-label col-sm-4">Sell Side:</label>
+                  <div class="col-sm-8 form-control-static">
+                    <%= @site.is_sellside? ? "Yes" : "No" %>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="control-label col-sm-4">Buy Side:</label>
+                  <div class="col-sm-8 form-control-static">
+                    <%= @site.is_buyside? ? "Yes" : "No" %>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="control-label col-sm-4">Movers & Shakers:</label>
+                  <div class="col-sm-8 form-control-static">
+                    <%= @site.is_movers? ? "Yes" : "No" %>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="control-label col-sm-4">Sector:</label>
+                  <div class="col-sm-8 form-control-static">
+                    <%= @site.sector_id? ? "Yes" : "No" %>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="control-label col-sm-4">Vertical:</label>
+                  <div class="col-sm-8 form-control-static">
+                    <%= @site.sector.name if @site.sector_id %>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="control-label col-sm-4">Geography:</label>
+                  <div class="col-sm-8 form-control-static">
+                    <%= @site.geo.name if @site.geo_id %>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="control-label col-sm-4">Size of Deal:</label>
+                  <div class="col-sm-8 form-control-static">
+                    <%= @site.size_of_deal %>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-offset-4 col-sm-5">
+                <%= link_to 'Edit', edit_admin_site_path(@site), class: "btn btn-warning" %>
+                <%= link_to 'Back', admin_sites_path, class: "btn btn-default" %>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

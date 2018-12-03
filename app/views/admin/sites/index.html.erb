@@ -1,0 +1,48 @@
+<div class="blog blog-category blog-archive container">
+  <div class="blog-category">
+    <div class="row col-lg-12">
+      <h1></h1>
+      <div class="panel panel-default">
+        <div class="panel-heading" style="height: 48px">Site List
+          <p class="pull-right"><%= link_to 'Add Site', new_admin_site_path, class: "btn btn-primary btn-sm" %></p></div>
+          <div class="panel-body">
+            <table class="table table-bordered table-striped table-hover">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>URL</th>
+                  <th>Sell Side</th>
+                  <th>Buy Side</th>
+                  <th>Movers & Shakers</th>
+                  <th>Sector</th>
+                  <th>Vertical</th>
+                  <th class="action-width">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @sites.each do |site| %>
+                <tr>
+                  <td><%= site.name %></td>
+                  <td><%= site.url %></td>
+                  <td><%= site.is_sellside? ? "Yes" : "No" %></td>
+                  <td><%= site.is_buyside? ? "Yes" : "No" %></td>
+                  <td><%= site.is_movers? ? "Yes" : "No" %></td>
+                  <td><%= site.sector_id? ? "Yes" : "No" %></td>
+                  <td><%= site.sector.name if site.sector_id %></td>
+                  <td><%= link_to '', '/admin/sites/' + site.id.to_s, class: "btn btn-xs btn-info fa fa-eye", title: "View" %>
+                    <%= link_to '', edit_admin_site_path(site), class: "btn btn-xs btn-warning fa fa-edit", title: "Edit" %>
+                    <%= link_to '', '/admin/sites/' + site.id.to_s, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-xs btn-danger fa fa-trash-o", title: "Delete" %>
+                  </td>
+                </tr>
+                <% end %>
+                <% if @sites.length == 0 %>
+                <tr><td colspan="9" style="text-align: center;">No Record Found.</td></tr>
+                <% end %>
+              </tbody>
+            </table>
+            <div class="pull-right"><%= paginate @sites %></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

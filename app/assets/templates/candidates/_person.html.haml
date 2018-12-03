@@ -1,0 +1,53 @@
+.panel.panel-default
+  .panel-heading.font-bold
+    Edit {{personField}}
+  .panel-body
+    %form.form-horizontal{"name" => "personForm", "novalidate"=>"", "ng-submit" => "submitPerson(personForm.$valid)"}
+
+      .form-group.required{"ng-class" =>"{ 'has-error': personForm.bio.$invalid && !personForm.bio.$pristine }", "ng-if" => "personField == 'Bio'"}
+        %label.col-sm-2.control-label {{personField}}
+        .col-sm-10
+          %textarea.form-control.w-lg{:id => "bio", :name => "bio", "ng-model" => "candidate.bio", :required => "", "ng-required"=>"true", :rows=> 6, :cols => 10}
+            %p.help-block{"ng-show" => "candidate.bio.$invalid && !candidate.bio.$pristine"} Bio is required.
+
+      .form-group.required{"ng-class" =>"{ 'has-error': personForm.designation.$invalid && !personForm.designation.$pristine }", "ng-if" => "personField == 'Designation'"}
+        %label.col-sm-2.control-label {{personField}}
+        .col-sm-10
+          %textarea.form-control.w-lg{:id => "designation", :name => "designation", "ng-model" => "candidate.designation", :required => "", "ng-required"=>"true", :rows=> 2, :cols => 10}
+            %p.help-block{"ng-show" => "candidate.designation.$invalid && !candidate.designation.$pristine"} Designation is required.
+
+      .form-group.required{"ng-class" =>"{ 'has-error': personForm.work_history.$invalid && !personForm.work_history.$pristine }", "ng-if" => "personField == 'Work History'"}
+        %label.col-sm-2.control-label {{personField}}
+        .col-sm-10
+          %textarea.form-control.w-lg{:id => "history", :name => "work_history", "ng-model" => "candidate.work_history", :required => "", "ng-required"=>"true", :rows=> 6, :cols => 10}
+            %p.help-block{"ng-show" => "candidate.work_history.$invalid && !candidate.work_history.$pristine"} Work History is required.
+
+      .form-group.required{"ng-class" =>"{ 'has-error': personForm.education.$invalid && !personForm.education.$pristine }", "ng-if" => "personField == 'Education'"}
+        %label.col-sm-2.control-label {{personField}}
+        .col-sm-10
+          %textarea.form-control.w-lg{:id => "education", :name => "education", "ng-model" => "candidate.education", :required => "", "ng-required"=>"true", :rows=> 6, :cols => 10}
+            %p.help-block{"ng-show" => "candidate.education.$invalid && !candidate.education.$pristine"} Education is required.
+
+      .form-group.required{"ng-class" =>"{ 'has-error': personForm.language.$invalid && !personForm.language.$pristine }", "ng-if" => "personField == 'Language'"}
+        %label.col-sm-2.control-label {{personField}}
+        .col-sm-10
+          %textarea.form-control.w-lg{:id => "language", :name => "language", "ng-model" => "candidate.language", :required => "", "ng-required"=>"true", :rows=> 3, :cols => 10}
+            %p.help-block{"ng-show" => "candidate.language.$invalid && !candidate.language.$pristine"} Language is required.
+
+      .form-group.required{"ng-class" =>"{ 'has-error': personForm.skills.$invalid && !personForm.skills.$pristine }", "ng-if" => "personField == 'Skills'"}
+        %label.col-sm-2.control-label {{personField}}
+        .col-sm-10
+          %textarea.form-control.w-lg{:id => "skills", :name => "skills", "ng-model" => "candidate.skills", :required => "", "ng-required"=>"true", :rows=> 3, :cols => 10}
+            %p.help-block{"ng-show" => "candidate.skills.$invalid && !candidate.skills.$pristine"} Skills is required.
+
+      .form-group.required{"ng-class" =>"{ 'has-error': personForm.industry_specialty.$invalid && !personForm.industry_specialty.$pristine }", "ng-if" => "personField == 'Industry Specialty'"}
+        %label.col-sm-2.control-label {{personField}}
+        .col-sm-10
+          %textarea.form-control.w-lg{:id => "industry_specialty", :name => "industry_specialty", "ng-model" => "candidate.industry_specialty", :required => "", "ng-required"=>"true", :rows=> 6, :cols => 10}
+            %p.help-block{"ng-show" => "candidate.industry_specialty.$invalid && !candidate.industry_specialty.$pristine"} Industry Specialty is required.
+
+      .line.line-dashed.b-b.line-lg.pull-in
+      .form-group
+        .col-sm-6.col-sm-offset-2
+          %button.btn.btn-default{"id"=>"cancel-person", "ng-click"=>"cancel()", "type"=>"button"} Cancel
+          %button.btn.btn-primary{"id"=>"edit-person", :type => "submit", "ng-disabled" => "personForm.$invalid" } Update

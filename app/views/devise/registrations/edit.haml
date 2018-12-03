@@ -1,0 +1,192 @@
+= content_for :title do
+  Account Edit
+.blog.blog-category.blog-archive.container{"style" => "margin-top: 50px;"}
+  .blog-category{"style" => "margin-top: 60px;"}
+    %ul.nav.nav-tabs.text-center{:role => "tablist"}
+      %li.active
+        %a{"aria-expanded" => "false", "data-toggle" => "tab", :href => "#payment", :role => "tab"}
+          %i.fa.fa-history
+          %br
+            %span.hidden-sm.hidden-xs Payment History
+
+      %li
+        %a{"aria-expanded" => "true", "data-toggle" => "tab", :href => "#account", :role => "tab"}
+          %i.fa.fa-user
+          %br
+            %span.hidden-sm.hidden-xs Account
+
+      %li
+        %a{"aria-expanded" => "false", "data-toggle" => "tab", :href => "#deleteac", :role => "tab"}
+          %i.fa.fa-trash-o
+          %br
+            %span.hidden-sm.hidden-xs Cancel Subscription
+
+    .tab-content
+      #payment.tab-pane.fade.active.in
+        .panel.panel-default
+          .panel-heading Current Subscription
+          .panel-body
+            - if @latest_payment
+              .form.form-horizontal
+                .form-group
+                  %label.control-label.col-sm-2
+                    Current Plan
+                  .col-sm-8.form-control-static
+                    - if @latest_payment.plan == "premium_monthly"
+                      = "$25 Monthly"
+                    - else
+                      = @latest_payment.plan
+                .form-group
+                  %label.control-label.col-sm-2
+                    Current State
+                  .col-sm-8.form-control-static
+                    - if @latest_payment.plan == "trial" || @latest_payment.plan == "premium_monthly"
+                      Active
+                    - elsif @latest_payment.plan == "cancelled"
+                      Inactive
+                .form-group
+                  .table-responsive.col-sm-offset-2.col-sm-6
+                    %table#people-table.table.table-striped.b-t.b-light
+                      %thead
+                        %tr
+                          %th Begin Date
+                          %th End Date
+                          %th Plan
+                          %th Amount
+                      %tbody
+                        %tr
+                          %td{:width => "20%"}
+                            = Time.at(@subscription_detail["current_period_start"]).strftime("%m-%d-%Y")
+                          %td{:width => "20%"}
+                            = Time.at(@subscription_detail["current_period_end"]).strftime("%m-%d-%Y")
+                          %td{:style => "text-align:middle;", :width => "30%"}
+                            = @subscription_detail["plan"].id
+                          %td{:style => "text-align:right;", :width => "30%"}
+                            = number_to_currency((@subscription_detail.plan.amount / 100))
+
+            - else
+              .form.form-horizontal
+                .form-group
+                  %label.control-label.col-sm-2
+                    Current Plan
+                  .col-sm-8.form-control-static
+                    - if current_user.remaining_days > 0
+                      = "Your trial period will expire in #{current_user.remaining_days} days" if current_user.subscription == "trial"
+                    - elsif current_user.remaining_days <= 0
+                      = "Your trial period is expired!"
+                .form-group
+                  %label.control-label.col-sm-2
+                    Current State
+                  .col-sm-8.form-control-static
+                    -if current_user.remaining_days <= 0
+                      %b Inactive
+                      (There won't be any further charges for this subscription.)
+                    - else
+                      %b Active
+                .form-group
+                  %label.control-label.col-sm-2
+                    Action Required
+                  .col-sm-8.form-control-static
+                    To subscribe! Click here for
+                    = link_to " Pricing Page.", pricing_path
+                    %p
+                      If you have any question, please send an email to
+                      %a{"href"=>"mailto:support@mergerhub.com?subject=Support"}
+                        support@mergerhub.com.
+                      We'll be happy to help.
+
+      #account.tab-pane
+        .panel.panel-default
+          .panel-body
+            = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "form-horizontal"}) do |f|
+              = devise_error_messages!
+              .form-group
+                = f.label :first_name, class: "col-sm-2 control-label"
+                .col-sm-10
+                  = f.text_field :first_name, class: "form-control", autofocus: true
+              .form-group
+                = f.label :last_name, class: "col-sm-2 control-label"
+                .col-sm-10
+                  = f.text_field :last_name, class: "form-control"
+              .form-group
+                = f.label :email, class: "col-sm-2 control-label"
+                .col-sm-10
+                  = f.email_field :email, class: "form-control", disabled: true
+
+              - if devise_mapping.confirmable? && resource.pending_reconfirmation?
+                .form-group
+                  %label{"class" => "control-label col-sm-2"}
+                    Currently waiting confirmation for: #{resource.unconfirmed_email}
+              .form-group
+                = f.label :password, class: "col-sm-2 control-label"
+                .col-sm-10
+                  = f.password_field :password, class: "form-control", autocomplete: "off"
+                  %p.help-block (leave blank if you don't want to change it)
+              .form-group
+                = f.label :password_confirmation, class: "col-sm-2 control-label"
+                .col-sm-10
+                  = f.password_field :password_confirmation, autocomplete: "off", class: "form-control"
+              .form-group
+                = f.label :current_password, class: "col-sm-2 control-label"
+                .col-sm-10
+                  = f.password_field :current_password, autocomplete: "off", class: "form-control"
+                  %p.help-block (we need your current password to confirm your changes)
+              .form-group
+                .col-sm-offset-2.col-sm-10
+                  = f.submit "Update", class: "btn btn-success"
+                  = link_to "Back", :back, class: "btn btn-default"
+
+
+      #deleteac.tab-pane
+        .panel.panel-default
+          .panel-body
+            - if current_user.remaining_days <= 0
+              - if current_user.subscription == "trial" && !current_user.is_paid_user
+                %h3 You are in 60 days trial subscription
+                %p
+                  %br
+                  %b
+                  = "Please subscribe! Your trial period will expire in #{current_user.remaining_days} days."
+                  ( Your account is active through #{current_user.created_at.strftime("%m/%d/%Y")} ).
+                  %br
+                  %br
+                  Click here for
+                  = link_to " Pricing Page", pricing_path
+              - elsif current_user.subscription == "paid" && current_user.is_paid_user
+                %h3 Delete your Mergerhub subscription
+                %p
+                  Your account is active through
+                  = current_user.created_at.strftime("%m/%d/%Y")
+                %div
+                  - if @latest_payment
+                    #{button_to "Cancel Your Paid Subscription", payment_cancel_subscription_plan_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, class: "btn btn-danger"}
+                    %br
+                    = link_to "Go Back", :back, class: "btn btn-default"
+                    %br
+              - elsif current_user.subscription == "cancelled" && !current_user.is_paid_user
+                %h3 You cancelled your subscription
+                %p
+                  Your account cancelled on
+                  = @latest_payment.updated_at.strftime("%m/%d/%Y")
+                  %br
+                  There won't be any further charges for this subscription.
+                %div.col-sm-3
+                  = link_to "Go Back", :back, class: "btn btn-default"
+              %p
+                %br
+                If you have any question, please send an email to
+                %a{"href"=>"mailto:support@mergerhub.com?subject=Support"}
+                  support@mergerhub.com.
+                We'll be happy to help.
+
+            - else
+              %h3 You are in 60 days trial subscription
+              %p
+                %br
+                %b
+                = "Please subscribe! Your trial period will expire in #{current_user.remaining_days} days."
+                ( Your account is active through #{current_user.created_at.strftime("%m/%d/%Y")} ).
+                %br
+                %br
+                Click here for
+                = link_to " Pricing Page", pricing_path

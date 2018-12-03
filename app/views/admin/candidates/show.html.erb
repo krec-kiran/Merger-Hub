@@ -1,0 +1,138 @@
+<div class="blog blog-category blog-archive container">
+  <div class="blog-category">
+    <div class="row col-lg-12">
+      <h1></h1>
+      <div class="panel panel-default">
+        <div class="panel-heading">Candidate Information
+        </div>
+        <div class="panel-body">
+          <form class="form-horizontal" role="form">
+          <div class="col-md-12">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="control-label col-sm-4">Name:</label>
+              <div class="col-sm-8 form-control-static">
+                <%= @candidate.name %>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-4">Email:</label>
+              <div class="col-sm-8 form-control-static">
+                <%= @candidate.email %>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-4">Street:</label>
+              <div class="col-sm-8 form-control-static">
+                <%= @candidate.street %>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-4">City:</label>
+              <div class="col-sm-8 form-control-static">
+                <%= @candidate.city %>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-4">State:</label>
+              <div class="col-sm-8 form-control-static">
+                <%= @candidate.state %>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-4">Country:</label>
+              <div class="col-sm-8 form-control-static">
+                <%= @candidate.country %>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-4">Language:</label>
+              <div class="col-sm-8 form-control-static">
+                <%= @candidate.language %>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-4">Company:</label>
+              <div class="col-sm-8 form-control-static">
+                <%= @candidate.company.name %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="control-label col-sm-4">Designation:</label>
+              <div class="col-sm-8 form-control-static">
+                <%= @candidate.designation %>
+              </div>
+            </div>
+            </div>
+            <div class="col-md-6">
+            <div class="form-group">
+              <label class="control-label col-sm-4">Skills:</label>
+              <div class="col-sm-8 form-control-static">
+                <%= @candidate.skills %>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-4">Profile:</label>
+              <div class="col-sm-8 form-control-static">
+                <%= @candidate.bio %>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-4">Work History:</label>
+              <div class="col-sm-8 form-control-static">
+                <%= @candidate.work_history %>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-4">Industry Speciality:</label>
+              <div class="col-sm-8 form-control-static">
+                <%= @candidate.industry_specialty %>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-4">Board Member</label>
+              <div class="col-sm-8 form-control-static">
+                <%= @candidate.board_member %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="control-label col-sm-4">Education:</label>
+              <div class="col-sm-8 form-control-static">
+                <%= @candidate.education %>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-4">Phone:</label>
+              <div class="col-sm-8 form-control-static">
+                <%= @candidate.phone %>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-4">Joined Year:</label>
+              <div class="col-sm-8 form-control-static">
+                <%= @candidate.joined %>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-4">Pin Code:</label>
+              <div class="col-sm-8 form-control-static">
+                <%= @candidate.pin_code %>
+              </div>
+            </div>
+            </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-sm-offset-4 col-sm-5">
+                <%= link_to 'Edit', edit_admin_candidate_path(@candidate), class: "btn btn-warning" %>
+                <%= link_to 'Back', admin_candidates_path, class: "btn btn-default" %>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

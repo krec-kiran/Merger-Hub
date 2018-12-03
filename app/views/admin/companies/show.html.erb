@@ -1,0 +1,153 @@
+<div class="blog blog-category blog-archive container">
+  <div class="blog-category">
+    <div class="row col-lg-12">
+      <h1></h1>
+      <div class="panel panel-default">
+        <div class="panel-heading">Company Information
+        </div>
+        <div class="panel-body">
+          <form class="form-horizontal" role="form">
+          <div class="col-md-12">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="control-label col-sm-4">Company Name:</label>
+              <div class="col-sm-8 form-control-static">
+                <%= @company.name %>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-4">Sector:</label>
+              <div class="col-sm-8 form-control-static">
+                <%= @company.sectors.first.name if @company.sectors.first %>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-4">Employees Count:</label>
+              <div class="col-sm-8 form-control-static">
+                <%= @company.employees_count %>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-4">Established Date:</label>
+              <div class="col-sm-8 form-control-static">
+                <%= @company.established_date %>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-4">Summary:</label>
+              <div class="col-sm-8 form-control-static">
+                <%= @company.summary %>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-4">Website:</label>
+              <div class="col-sm-8 form-control-static">
+                <%= @company.website %>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-4">Email:</label>
+              <div class="col-sm-8 form-control-static">
+                <%= @company.email %>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-4">Revenue:</label>
+              <div class="col-sm-8 form-control-static">
+                <%= @company.revenue %>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-4">Company Type:</label>
+              <div class="col-sm-8 form-control-static">
+                <%= @company.company_type.name %>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-4">Hiring:</label>
+              <div class="col-sm-8 form-control-static">
+                <%= @company.hiring ? "Yes" : "" %>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-4">Fund raising:</label>
+              <div class="col-sm-8 form-control-static">
+                <%= @company.fund_raising ? "Yes" : "" %>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <% @company.locations.each do |location| %>
+            <div class="form-group">
+              <label class="control-label col-sm-4">Street:</label>
+              <div class="col-sm-8 form-control-static">
+                <%= location.street %>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-4">City:</label>
+              <div class="col-sm-8 form-control-static">
+                <%= location.city %>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-4">State:</label>
+              <div class="col-sm-8 form-control-static">
+                <%= location.state %>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-4">Country:</label>
+              <div class="col-sm-8 form-control-static">
+                <%= location.country %>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-4">Pin Code:</label>
+              <div class="col-sm-8 form-control-static">
+                <%= location.pin_code %>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-4">Headquarter</label>
+              <div class="col-sm-8 form-control-static">
+                <%= location.is_headquarter ? "Yes" : "No" %>
+              </div>
+            </div>
+
+            <% end %>
+
+            <% @company.phones.each do |phone| %>
+            <div class="form-group">
+              <label class="control-label col-sm-4">Mobile:</label>
+              <div class="col-sm-8 form-control-static">
+                <%= phone.mobile %>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-4">Phone:</label>
+              <div class="col-sm-8 form-control-static">
+                <%= phone.landline %>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-4">FAX:</label>
+              <div class="col-sm-8 form-control-static">
+                <%= phone.fax %>
+              </div>
+            </div>
+            <% end %>
+            </div></div>
+
+            <div class="form-group">
+              <div class="col-sm-offset-4 col-sm-5">
+                <%= link_to 'Edit', edit_admin_company_path(@company), class: "btn btn-warning" %>
+                <%= link_to 'Back', admin_companies_path, class: "btn btn-default" %>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

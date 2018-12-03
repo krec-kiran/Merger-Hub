@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Stripe customer token:</strong>
+  <%= @payment.stripe_customer_token %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @payment.user_id %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @payment.email %>
+</p>
+
+<p>
+  <strong>Plan:</strong>
+  <%= @payment.plan %>
+</p>
+
+<%= link_to 'Edit', edit_payment_path(@payment) %> |
+<%= link_to 'Back', payments_path %>

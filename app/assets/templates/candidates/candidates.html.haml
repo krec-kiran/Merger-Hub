@@ -1,0 +1,91 @@
+.blog.blog-category.blog-archive.container.search-panel
+  .panel.panel-default
+    .panel-heading People Search
+    .panel-body
+      .form-horizontal
+        .row
+          .col-sm-4
+            .form-group
+              %label.col-md-3.control-label Name
+              .col-md-9
+                %ui-select{"ng-model" => "search.selectedCandidate", :theme => "bootstrap"}
+                  %ui-select-match{:placeholder => "Enter name..."} {{$select.selected.name}}
+
+                  %ui-select-choices{:repeat => "candidate.id as candidate in candidates |  filter: { name:$select.search} track by candidate.name"}
+                    %span{"ng-bind-html" => "candidate.name | highlight: $select.search"}
+          .col-sm-4
+            .form-group
+              %label.col-md-3.control-label Sector
+              .col-md-9
+                %ui-select{"ng-model" => "search.selectedSector", :theme => "bootstrap"}
+                  %ui-select-match{:placeholder => "Enter sector..."} {{$select.selected.name}}
+                  %ui-select-choices{:repeat => "sector.id as sector in sectors | filter: $select.search track by sector.name"}
+                    %span{"ng-bind-html" => "sector.name | highlight: $select.search"}
+          .col-sm-4
+            .form-group
+              %label.col-md-3.control-label{:for => "inputName"} Company
+              .col-md-9
+                %ui-select{"ng-model" => "search.selectedCompany", :theme => "bootstrap"}
+                  %ui-select-match{:placeholder => "Enter company..."} {{$select.selected.name}}
+                  %ui-select-choices{:repeat => "company.id as company in companies | filter: { name:$select.search } track by company.name"}
+                    %span{"ng-bind-html" => "company.name | highlight: $select.search"}
+        .row
+          .col-sm-4
+            .form-group
+              %label.col-md-3.control-label{:for => "inputName"} City
+              .col-md-9
+                %ui-select{"ng-model" => "search.selectedCity", :theme => "bootstrap"}
+                  %ui-select-match{:placeholder => "Enter city..."} {{$select.selected}}
+                  %ui-select-choices{:repeat => "city in cities | filter: $select.search"}
+                    %span{"ng-bind-html" => "city | highlight: $select.search"}
+          .col-sm-4
+            .form-group
+              %label.col-md-3.control-label{:for => "inputName"} Title
+              .col-md-9
+                .input-group
+                  %input.form-control{"type"=>"text", "ng-model" => "search.selectedTitle"}
+
+          .col-sm-4
+          .col-sm-4
+            .form-group
+              .col-md-3
+              .col-md-9
+                %button.btn.btn-info{"ng-click" => "submitPeople()"} Search
+                %button.btn.btn-default{"ng-click" => "clearPeople()"} Clear
+  #content
+    .panel.panel-default
+      .panel-heading People List
+      .panel-body
+        #my-tab-content.tab-content
+          #people-network.tab-pane.active
+            .blog
+              .row
+                .blog-list.blog-category-list
+                  %article.post.col-md-12.col-sm-12.col-xs-12
+                    .post-inner
+                      .table-responsive
+                        %table#people-table.table.table-striped.b-t.b-light
+                          %thead
+                            %tr
+                              %th Name
+                              %th Works For
+                              %th Title
+                              %th Sector
+                              %th Email
+                              %th Location
+                          %tbody{"cg-busy"=>"getPeoplepromise"}
+                            %tr{"dir-paginate" => "person in people | itemsPerPage:25: 'paginatePeople'", "pagination-id"=>"paginatePeople"}
+                              %td.pointer{"ng-click" => "gotoPeopelDetail(person.id)"} {{person.name}}
+                              %td.pointer{"ng-click" => "redirectOraganizationPage(person.company_id)" } {{person.company_name}}
+                              %td {{person.designation}}
+                              %td {{person.sector_name}}
+                              %td.pointer
+                                %a{"href"=>"mailto:{{person.email}}?subject=Mergerhub-Contact"} {{person.email}}
+                              %td {{person.city}}
+                            %tr{"ng-if" => "people.length == 0"}
+                              %td{"colspan"=>6, "style" =>"text-align:center;"}
+                                No record found
+                          %tfoot
+                            %tr
+                              %td.text-right{"colspan"=>"6"}
+                                %dir-pagination-controls{"pagination-id"=>"paginatePeople"}

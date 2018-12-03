@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  advisor_id: 1
+  client_id: 1
+  target_id: 1
+  date: 2015-09-02
+  buy_or_sell: MyString
+
+two:
+  advisor_id: 1
+  client_id: 1
+  target_id: 1
+  date: 2015-09-02
+  buy_or_sell: MyString

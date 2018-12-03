@@ -1,0 +1,46 @@
+!!!
+%html{:xmlns => "http://www.w3.org/1999/xhtml"}
+  %head
+    %meta{:content => "width=device-width", :name => "viewport"}/
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title Welcome to MergerHub
+  %body{:style => "font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; -webkit-text-size-adjust: none; width: 100% !important; height: 100%; margin: 0; padding: 0;"}
+    %table{:bgcolor => "#ec6952", :style => "width: 100%;"}
+      %tr
+        %td
+        %td{:style => "display: block !important; max-width: 600px !important; clear: both !important; margin: 0 auto; padding: 0;"}
+          %div{:style => "color: white;max-width: 600px; display: block; margin: 0 auto; padding: 5px;"}
+            %table{:style => "width: 100%;"}
+              %tr
+                %td MergerHub
+        %td
+    %table{:style => "width: 100%;"}
+      %td{:style => "display: block !important; max-width: 600px !important; clear: both !important; margin: 0 auto; padding: 0;"}
+        %div{:style => "max-width: 600px; display: block; margin: 0 auto; padding: 15px;"}
+          %table{:style => "width: 100%; margin: 0; padding: 0;"}
+            %h3{:style => "line-height: 1.1; font-weight: 500; font-size: 27px; margin: 0 0 15px; padding: 0;"} Hi, #{@user_name}!
+            %p
+              %h1 Payment Confirmation
+              This email confirms your recent payment of $25.00. Here are the details of your payment:
+            %div
+              %table
+                %tr
+                  %th Duration
+                  %th Plan
+                  %th Amount
+                %tr
+                  %td{:style => "text-align:left;", :width => "40%"}
+                    = Time.at(@subcripted_detail.current_period_start).strftime("%m-%d-%Y") + " - "
+                    = Time.at(@subcripted_detail.current_period_end).strftime("%m-%d-%Y")
+                  %td{:style => "text-align:middle;", :width => "30%"}
+                    = @subcripted_detail.plan.id
+                  %td{:style => "text-align:right;", :width => "30%"}
+                    = number_to_currency((@subcripted_detail.plan.amount / 100))
+            %p Have a great day,
+            %p The MergerHub Team
+    %table{:style => "width: 100%; clear: both !important; margin: 0; padding: 0;"}
+      %td{:style => "display: block !important; max-width: 600px !important; clear: both !important; margin: 0 auto; padding: 0;"}
+        %div{:style => "max-width: 600px; display: block; margin: 0 auto; padding: 15px;"}
+          %table{:style => "width: 100%; margin: 0; padding: 0;"}
+            %td{:align => "center", :style => "margin: 0; padding: 0;"}
+              %p{:style => "color: #777777; font-weight: normal; font-size: 14px; line-height: 1.6; margin: 0 0 10px; padding: 0;"} © 2015 MergerHub • New Street Blackfriars, London UK

@@ -1,0 +1,16 @@
+<div class="blog blog-category blog-archive container">
+  <div class="blog-category">
+    <div class="row col-lg-12">
+      <h1></h1>
+      <div class="panel panel-default">
+        <div class="panel-heading">Edit Sector
+        </div>
+        <div class="panel-body">
+          <%= form_for @sector, url: {action: "update"}, html:{ class: "form-horizontal" } do |f| %>
+          <%= render 'form', f: f %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

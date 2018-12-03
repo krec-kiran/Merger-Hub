@@ -1,0 +1,17 @@
+.row
+  .col-sm-6
+    #top-company-graph{"top_company_graph" => ""}
+  .col-sm-6
+    .panel.panel-default
+      .panel-heading.font-bold
+        M&A Engagements
+      .table-responsive
+        %table.table.table-striped.b-t.b-light
+          %thead
+            %tr
+              %th Top Investment Banks
+              %th YTD
+          %tbody
+            %tr{"ng-repeat" => "investment in bankEngagements"}
+              %td {{investment.name}}
+              %td {{investment.ytd}}

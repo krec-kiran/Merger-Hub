@@ -1,0 +1,52 @@
+#entries.blog.blog-category.blog-archive.container.search-panel
+  .panel.panel-default
+    .panel-heading News Search
+    .panel-body
+      .col-md-4
+        .form-group
+          %label.col-md-3.control-label{:for => "inputEmail"} Section
+          .col-md-9
+            %select.col-md-9.form-control.m-b.w-md.pointer{"ng-model" => "search.selectedSection", "ng-change" => "sectionChanged()"}
+              %option{"value" => ""} All
+              %option{"ng-repeat" => "section in sections", "value" => "{{section}}"}
+                {{section}}
+      .col-md-4
+        .form-group
+          %label.col-md-3.control-label{:for => "inputEmail"} Vertical
+          .col-md-9
+            %select.form-control.m-b.w-md{"ng-model" => "search.selectedVertical", "ng-options" => "sector.id as sector.name for sector in sectors", "ng-disabled" =>"!(search.selectedSection == 'Sector')"}
+              %option{"value" => ""} All
+      / .form-group
+      /   %label{:for => "inputEmail"} Geography
+      /   %select.form-control.m-b.w-md.pointer{"ng-model" => "search.selectedGeo"}
+      /     %option{"value" => ""} All
+      /     %option{"ng-repeat" => "geo in geos", "value" => "{{geo}}"}
+      /       {{geo}}
+      / .form-group
+      /   %label{:for => "inputEmail"} Size of deal
+      /   %select.form-control.m-b.w-md.pointer{"ng-model" => "search.selectedDeal"}
+      /     %option{"value" => ""} All
+      /     %option{"ng-repeat" => "deal in size_of_deals", "value" => "{{deal}}"}
+      /       {{deal}}
+      .col-md-4.text-right
+        %button.btn.btn-info{"ng-click" => "submitNews()"} Search
+        %button.btn.btn-default{"ng-click" => "clearNews()"} Clear
+  .row{"cg-busy"=>"entriesPromise"}
+    .blog-list.blog-category-list
+      %article.post.col-md-12.col-sm-12.col-xs-12{"dir-paginate" => "entry in entries | itemsPerPage:entriesPerPage:'paginateentries'", "ng-animate" => "animate", "pagination-id"=>"paginateentries", "total-items"=> "totalEntries", "current-page"=>"pagination.current"}
+        .post-inner
+          .content
+            .date-label
+              %span.month {{entry.published | date: 'MMM'}}
+              %span.date-number {{entry.published | date: 'dd'}}
+            %h3.post-title
+              %a.read-more{:href => "{{entry.url}}", "target"=> "_new"} {{entry.title}}
+            %hr
+              .post-entry
+                %p{"ng-bind-html"=>"entrySummary(entry.summary)"}
+                %a.read-more{:href => "{{entry.url}}", "target"=> "_new"}
+                  Read more
+                  %i.fa.fa-long-arrow-right
+      %div.pagination-container.text-right
+        %dir-pagination-controls{"pagination-id"=>"paginateentries", "on-page-change" => "pageChanged(newPageNumber)"}
+/ //blog

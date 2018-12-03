@@ -1,0 +1,55 @@
+.blog.blog-category.blog-archive.container{"style" => "margin-top: 50px;"}
+  .blog-category.col-md-offset-3.col-md-6
+    .panel.panel-default.credit-card-box
+      .panel-heading.display-table
+        .row.display-tr
+          %h3.panel-title.display-td Payment Details
+          .display-td
+            %img.img-responsive.pull-right{:src => "http://i76.imgup.net/accepted_c22e0.png"}
+      .panel-body
+        = form_for(@payment) do |f|
+          = f.hidden_field :plan ,:value => @plan
+          = f.hidden_field :stripe_customer_token
+          = f.hidden_field :email, :value => @email
+          .row
+            .col-xs-12
+              .form-group
+                %label{:for => "cardNumber"} CARD NUMBER
+                .input-group
+                  %input.form-control{:autocomplete => "cc-number", :autofocus => "", :name => "cardNumber", :placeholder => "Valid Card Number", :required => "", :type => "tel"}
+                  %span.input-group-addon
+                    %i.fa.fa-credit-card
+          .row
+            .col-xs-7.col-md-7
+              .form-group
+                %label{:for => "cardExpiry"}
+                  %span.hidden-xs EXPIRATION
+                  %span.visible-xs-inline EXP
+                  DATE
+                %input.form-control{:autocomplete => "cc-exp", :name => "cardExpiry", :placeholder => "MM / YY", :required => "", :type => "tel"}
+            .col-xs-5.col-md-5.pull-right
+              .form-group
+                %label{:for => "cardCVC"} CVV CODE
+                %input.form-control{:autocomplete => "cc-csc", :name => "cardCVC", :placeholder => "CVV", :required => "", :type => "tel"}
+          .row
+            .col-xs-12
+              .form-group
+                %label{:for => "cardHolderName"} CARD HOLDEER NAME
+                .input-group
+                  %input.form-control{:autocomplete => "cc-name", :autofocus => "", :name => "cardHolderName", :placeholder => "Card Holder Name", :required => "", :type => "text"}
+          .row
+            .col-xs-12
+              .form-actions.text-right
+                %button.btn.btn-default Clear
+                %button.btn.btn-success.btn-md{:type => "submit"} Pay $25
+
+          .row{:style => "display:none;"}
+            .col-xs-12
+              %p.payment-errors
+
+
+
+
+
+
+

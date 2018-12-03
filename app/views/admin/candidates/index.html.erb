@@ -1,0 +1,70 @@
+<div class="blog blog-category blog-archive container">
+  <div class="blog-category">
+    <div class="row col-lg-12">
+      <h1></h1>
+      <div class="panel panel-default">
+        <div class="panel-heading" style="height: 48px">Candidate List
+          <p class="pull-right"><%= link_to 'Add Candidate', new_admin_candidate_path, class: "btn btn-primary btn-sm" %></p></div>
+          <div class="panel-body">
+            <table class="table table-bordered table-striped table-hover">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Phone</th>
+                  <th>Company</th>
+                  <th>Designation</th>
+                  <th>Sector</th>
+                  <th>Valid user</th>
+                  <th class="action-width">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @candidates.each do |candidate| %>
+                <tr>
+                  <td><%= candidate.name %></td>
+                  <td><%= candidate.email %></td>
+                  <td><%= candidate.phone %></td>
+                  <td><%= candidate.company.name if candidate.company.present? %></td>
+                  <td><%= candidate.designation %></td>
+                  <td><%= candidate.company.sectors.first.name if candidate.company.present? %></td>
+                  <% if candidate.user && candidate.user.is_accept? %>
+                    <td><input class="user_is_accept" name="user[is_accept]" type="checkbox" checked disabled /></td>
+                  <% else %>
+                    <td><input class="user_is_accept" name="user[is_accept]" type="checkbox" data-userid="<%= candidate.user.id if candidate.user %>" /></td>
+                  <% end %>
+                  <td><%= link_to '', '/admin/candidates/' + candidate.id.to_s, class: "btn btn-xs btn-info fa fa-eye", title: "View" %>
+                    <%= link_to '', edit_admin_candidate_path(candidate), class: "btn btn-xs btn-warning fa fa-edit", title: "Edit" %>
+                    <%= link_to '', '/admin/candidates/' + candidate.id.to_s, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-xs btn-danger fa fa-trash-o", title: "Delete" %>
+                  </td>
+                </tr>
+                <% end %>
+                <% if @candidates.length == 0 %>
+                <tr><td>No Record Found.</td></tr>
+                <% end %>
+              </tbody>
+            </table>
+            <div class="pull-right"><%= paginate @candidates %></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  $(".user_is_accept").change(function() {
+    var result = false;
+    if(this.checked){
+      result = true;
+      toastr.success("Candidate added successfully");
+    }
+    var request = $.ajax({
+      url: "/admin/candidates/approve_user/" + $(this).data("userid"),
+      type: "PUT",
+      data: { value : result }
+    });
+    request.done(function(msg) {
+      $("#log").html( msg );
+    });
+  });
+</script>

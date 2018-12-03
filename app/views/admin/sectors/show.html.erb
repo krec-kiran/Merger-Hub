@@ -1,0 +1,31 @@
+<div class="blog blog-category blog-archive container">
+  <div class="blog-category">
+    <div class="row col-lg-12">
+      <h1></h1>
+      <div class="panel panel-default">
+        <div class="panel-heading">Sector Information
+        </div>
+        <div class="panel-body">
+          <form class="form-horizontal" role="form">
+            <div class="col-md-12">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="control-label col-sm-4">Name:</label>
+                  <div class="col-sm-8 form-control-static">
+                    <%= @sector.name %>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-offset-4 col-sm-5">
+                <%= link_to 'Edit', edit_admin_sector_path(@sector), class: "btn btn-warning" %>
+                <%= link_to 'Back', admin_sectors_path, class: "btn btn-default" %>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

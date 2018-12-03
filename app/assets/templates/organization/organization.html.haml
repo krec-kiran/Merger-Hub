@@ -1,0 +1,99 @@
+.blog.blog-category.blog-archive.container.search-panel
+  .panel.panel-default
+    .panel-heading Organization Search
+    .panel-body
+      .form-horizontal
+        .row
+          .col-sm-4
+            .form-group
+              %label.col-md-3.control-label{:for => "inputName"} Company
+              .col-md-9
+                %ui-select{"ng-model" => "search.selectedCompany", :theme => "bootstrap"}
+                  %ui-select-match{:placeholder => "Enter company..."} {{$select.selected.name}}
+                  %ui-select-choices{:repeat => "company.id as company in companies | filter: { name:$select.search } track by company.name"}
+                    %span{"ng-bind-html" => "company.name | highlight: $select.search"}
+          .col-sm-4
+            .form-group
+              %label.col-md-3.control-label{:for => "inputName"} Sector
+              .col-md-9
+                %ui-select{"ng-model" => "search.selectedSector", :theme => "bootstrap"}
+                  %ui-select-match{:placeholder => "Enter sector..."} {{$select.selected.name}}
+                  %ui-select-choices{:repeat => "sector.id as sector in sectors | filter: $select.search track by sector.name"}
+                    %span{"ng-bind-html" => "sector.name | highlight: $select.search"}
+          .col-sm-4
+            .form-group
+              %label.col-md-3.control-label{:for => "inputName"} City
+              .col-md-9
+                %ui-select{"ng-model" => "search.city", :theme => "bootstrap"}
+                  %ui-select-match{:placeholder => "Enter city..."} {{$select.selected}}
+                  %ui-select-choices{:repeat => "city in cities | filter: $select.search"}
+                    %span{"ng-bind-html" => "city | highlight: $select.search"}
+        .row
+          .col-sm-4
+            .form-group
+              %label.col-md-3.control-label{:for => "inputName"} Country
+              .col-md-9
+                %ui-select{"ng-model" => "search.country", :theme => "bootstrap"}
+                  %ui-select-match{:placeholder => "Enter country..."} {{$select.selected}}
+                  %ui-select-choices{:repeat => "country in countries | filter: $select.search"}
+                    %span{"ng-bind-html" => "country | highlight: $select.search"}
+          .col-sm-4
+            .form-group
+              .col-md-1
+              .col-md-4
+                .input-group
+                  %input{"ng-model" => "search.hiring", :name => "hiring", :type => "checkbox"}
+                    Hiring
+              .col-md-5
+                .input-group
+                  %input{"ng-model" => "search.fundraising", :name => "fundraising", :type => "checkbox"}
+                    Fundraising
+          .col-sm-4
+            .form-group
+              .col-md-3
+              .col-md-9
+                %button.btn.btn-info{"ng-click" => "submitOrganization()"} Search
+                %button.btn.btn-default{"ng-click" => "clearOrganization()"} Clear
+  #content
+    .panel.panel-default
+      .panel-heading Organization List
+      .panel-body
+        #my-tab-content.tab-content
+          #people-network.tab-pane.active
+            .blog
+              .row
+                .blog-list.blog-category-list
+                  %article.post.col-md-12.col-sm-12.col-xs-12
+                    .post-inner
+                      .table-responsive
+                        %table#organization-table.table.table-striped.b-t.b-light
+                          %thead
+                            %tr
+                              %th Company
+                              %th Sector
+                              %th Revenue
+                              %th Location
+                              %th Website
+                              %th Phone
+                          %tbody{"cg-busy"=>"getOrganizationpromise"}
+                            %tr{"dir-paginate" => "company in organization | itemsPerPage:25: 'paginateOrganization'", "pagination-id"=>"paginateOrganization"}
+                              %td.pointer{"ng-click" => "gotoOrganizationDetail(company.id)"} {{company.name}}
+                              %td {{company.sector_name}}
+                              %td {{company.revenue}}
+                              %td {{company.address}}
+                              %td.more
+                                %a.pointer.news-title{:href => "http://{{company.website}}", "target"=> "_blank", "title" => "{{company.website}}" } {{company.website}}
+                              %td{ "style" =>"width: 150px" } {{company.phone}}
+                            %tr{"ng-if" => "organization.length == 0"}
+                              %td{"colspan"=>6, "style" =>"text-align:center;"}
+                                No record found
+                          %tfoot
+                            %tr
+                              %td.text-right{"colspan"=>"6"}
+                                %dir-pagination-controls{"pagination-id"=>"paginateOrganization"}
+
+                    / //post-inner
+                  / //post
+                / //blog-list
+              / //row
+            / //blog

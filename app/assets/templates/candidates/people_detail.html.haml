@@ -1,0 +1,147 @@
+.col-lg-3
+  .panel.panel-default
+    .panel-body
+      .form-group.text-center
+        %img{"ng-src" => "{{personDetail.avatar}}", "width" => 140}
+        %br
+        %br
+        %a{"id"=>"edit-logo", "ng-file-select" => "uploadAvatar($files)",  "ng-model"=>"candidates_upload_files", "ng-accept" =>"'image/png,image/gif,image/jpeg'", "multiple"=>"", "ng-if" => "personDetail.editable"} Change Photo
+        %br
+        %label {{personDetail.name}}
+        %br
+        %span {{personDetail.company_name}}
+        %br
+        %p.pull-right{"ng-if" => "personDetail.editable"}
+          %a.btn.btn-xs.btn-warning.fa.fa-edit{"style"=> "color:white;font-size:14px;", "ng-click"=>"editPeople('Designation')", "title" => "Edit"}
+        .post-entry
+          %p {{personDetail.designation}}
+      %hr
+      %br
+      .form-group{"ng-if" => "personDetail.joined"}
+        %label Joined
+        %div
+          {{personDetail.joined}}
+      .form-group
+        %label Email
+        %div
+          {{personDetail.email}}
+      .form-group{"ng-if" => "personDetail.phone"}
+        %label Phone
+        %div
+          {{personDetail.phone}}
+      .form-group{"ng-if" => "personDetail.location"}
+        %label Location
+        %div
+          {{personDetail.city}}
+      .form-group
+        %label Sector
+        %div
+          {{personDetail.sector_name}}
+      .form-actions.text-center
+
+.col-lg-9
+  .blog-list.blog-category-list
+    %article.col-md-12.col-sm-12.col-xs-12
+      .post-inner
+        .content
+          %h3.post-title
+            bio
+            %p.pull-right{"ng-if" => "personDetail.editable"}
+              %a.btn.btn-warning.btn-xs.fa.fa-edit{"style"=> "color:white;font-size:14px;", "ng-click"=>"editPeople('Bio')", "title" => "Edit"}
+
+          %hr
+            .post-entry
+              %p {{personDetail.bio}}
+    %article.col-md-12.col-sm-12.col-xs-12
+      .post-inner
+        .content
+          %h3.post-title
+            work history
+            %p.pull-right{"ng-if" => "personDetail.editable"}
+              %a.btn.btn-warning.btn-xs.fa.fa-edit{"style"=> "color:white;font-size:14px;", "ng-click"=>"editPeople('Work History')", "title" => "Edit"}
+          %hr
+            .post-entry
+              %p {{personDetail.work_history}}
+    %article.col-md-12.col-sm-12.col-xs-12{"ng-if" => "personDetail.industry_specialty"}
+      .post-inner
+        .content
+          %h3.post-title
+            industry specialty
+            %p.pull-right{"ng-if" => "personDetail.editable"}
+              %a.btn.btn-warning.btn-xs.fa.fa-edit{"style"=> "color:white;font-size:14px;", "ng-click"=>"editPeople('Industry Specialty')", "title" => "Edit"}
+          %hr
+            .post-entry
+              %p {{personDetail.industry_specialty}}
+    %article.col-md-12.col-sm-12.col-xs-12
+      .post-inner
+        .content
+          %h3.post-title
+            education
+            %p.pull-right{"ng-if" => "personDetail.editable"}
+              %a.btn.btn-warning.btn-xs.fa.fa-edit{"style"=> "color:white;font-size:14px;", "ng-click"=>"editPeople('Education')", "title" => "Edit"}
+          %hr
+            .post-entry
+              %p {{personDetail.education}}
+    %article.col-md-12.col-sm-12.col-xs-12
+      .post-inner
+        .content
+          %h3.post-title
+            languages
+            %p.pull-right{"ng-if" => "personDetail.editable"}
+              %a.btn.btn-warning.btn-xs.fa.fa-edit{"style"=> "color:white;font-size:14px;", "ng-click"=>"editPeople('Language')", "title" => "Edit"}
+          %hr
+            .post-entry
+              %p {{personDetail.language}}
+    %article.col-md-12.col-sm-12.col-xs-12
+      .post-inner
+        .content
+          %h3.post-title
+            skills
+            %p.pull-right{"ng-if" => "personDetail.editable"}
+              %a.btn.btn-warning.btn-xs.fa.fa-edit{"style"=> "color:white;font-size:14px;", "ng-click"=>"editPeople('Skills')", "title" => "Edit"}
+          %hr
+            .post-entry
+              %p {{personDetail.skills}}
+    %article.post.col-md-12.col-sm-12.col-xs-12
+      .post-inner{ "style" => "padding: 10px;" }
+        %h3.post-title
+          M&A transactions
+          %a.btn.btn-info.btn-xs.pull-right.fa.fa-plus{"style"=> "color:white;font-size:14px;", "ng-if" => "personDetail.editable", "href" => "/transactions/new?person_id={{person_id}}&company_id={{personDetail.company_id}}", "title" => "Add"}
+        %hr
+          .post-entry
+            .table-responsive
+              %table.table.table-striped.b-t.b-light
+                %thead
+                  %tr
+                    %th{:width => "150"} Date
+                    %th Target
+                    %th{:width => "100"} Sector
+                    %th Value
+                    %th{:width => "200"} Transaction Type
+                    %th{:width => "200"} Investor/Seller
+                    %th{"ng-if" => "personDetail.editable"} Action
+                %tbody{"cg-busy"=>"getPersonpromise"}
+                  %tr{"dir-paginate" => "transaction in personTransactionDetail | itemsPerPage:5: 'paginatePeople'", "pagination-id"=>"paginatePeople"}
+                    %td {{transaction.date}}
+                    %td.pointer{"ng-click" => "gotoOrganizationDetail(transaction.target_id)"} {{transaction.target}}
+                    %td {{transaction.sector}}
+                    %td {{transaction.value}}
+                    %td {{transaction.transaction_type}}
+                    %td
+                      %p.pointer{"ng-if" => "transaction.investor", "ng-click" => "gotoOrganizationDetail(transaction.buyer_id)"}
+                        %b
+                          Investor
+                        {{transaction.investor}}
+                      %p.pointer{"ng-if" => "transaction.seller", "ng-click" => "gotoOrganizationDetail(transaction.seller_id)"}
+                        %b
+                          Seller
+                        {{transaction.seller}}
+                    %td
+                      %a.btn.btn-warning.btn-xs.fa.fa-edit{"ng-if" => "personDetail.editable", "href" => "/transactions/{{transaction.id}}/edit?person_id={{person_id}}", "title" => "Edit"}
+                  %tr{"ng-if" => "personTransactionDetail.length == 0"}
+                    %td{"colspan"=>6, "style" =>"text-align:center;"}
+                      No record found
+                %tfoot
+                  %tr
+                    %td.text-right{"colspan"=>"6"}
+                      %dir-pagination-controls{"pagination-id"=>"paginatePeople"}      }

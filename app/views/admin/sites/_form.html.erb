@@ -1,0 +1,100 @@
+<%= javascript_include_tag "admin-newssite" %>
+<div class="col-md-12">
+  <div class="col-md-6">
+    <div class="form-group">
+      <%= f.label :name, class: "control-label col-sm-4" do %>
+        Name <i class="fa fa-star"></i>
+      <% end %>
+      <div class="col-sm-8">
+        <%= f.text_field :name, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :url, class: "control-label col-sm-4" do %>
+        URL <i class="fa fa-star"></i>
+      <% end %>
+      <div class="col-sm-8">
+        <%= f.text_field :url, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label 'Sell Side', class: "control-label col-sm-4" %>
+      <div class="col-sm-2">
+        <%= f.check_box :is_sellside %>
+      </div>
+      <%= f.label 'Buy Side', class: "control-label col-sm-4" %>
+      <div class="col-sm-2">
+        <%= f.check_box :is_buyside %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label 'Sector', class: "control-label col-sm-4" %>
+      <div class="col-sm-2">
+      <% if action_name == "new" %>
+        <input type="checkbox" id="site_is_sector">
+      <% else %>
+        <% if @site.sector_id.present? %>
+          <input type="checkbox" id="site_is_sector" checked>
+        <% else %>
+          <input type="checkbox" id="site_is_sector" >
+        <% end %>
+      <% end %>
+      </div>
+      <%= f.label 'Movers & Shakers', class: "control-label col-sm-4" %>
+      <div class="col-sm-2">
+        <%= f.check_box :is_movers %>
+      </div>
+    </div>
+    <% if action_name == "new" %>
+    <div class="form-group" id="sector_div">
+      <%= f.label 'Vertical', class: "control-label col-sm-4" %>
+      <div class="col-sm-8">
+        <%= f.select(:sector_id, Sector.all.collect {|u| [u.name, u.id]}, { :prompt => 'Please Select'} , { class: "sector_vertical form-control" }) %>
+      </div>
+    </div>
+    <% else %>
+    <div class="form-group">
+      <%= f.label 'Vertical', class: "control-label col-sm-4" %>
+      <div class="col-sm-8">
+        <%= f.select(:sector_id, Sector.all.collect {|u| [u.name, u.id]}, { :prompt => 'Please Select'} , { class: "sector_vertical form-control" }) %>
+      </div>
+    </div>
+    <% end %>
+  </div>
+  <div class="col-md-6">
+    <div class="form-group">
+      <%= f.label :geo_id, class: "control-label col-sm-4" do %>
+        Geography
+      <% end %>
+      <div class="col-sm-8">
+        <%= f.select(:geo_id, Geo.all.collect {|u| [u.name, u.id]}, { :prompt => 'Please Select'} , { class: "form-control" }) %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label 'Size of Deal', class: "control-label col-sm-4" %>
+      <div class="col-sm-8">
+        <%= f.text_field :size_of_deal, class: "form-control" %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="form-group">
+  <div class="col-sm-offset-6 col-sm-5">
+    <%= f.submit 'Save', class: "btn btn-success" %>
+    <%= link_to 'Back', admin_sites_path, class: "btn btn-default" %>
+  </div>
+</div>
+
+<script>
+  $("#sector_div").hide();
+  $("#site_is_sector").on("change", function(){
+    if($('#site_is_sector').is(':checked') == true){
+      $("#sector_div").show();
+    }
+    else{
+      $("#sector_div").hide();
+      $(".sector_vertical").val("");
+    }
+  })
+</script>

@@ -1,0 +1,45 @@
+<div class="blog blog-category blog-archive container">
+  <div class="blog-category">
+    <div class="row col-lg-12" style="width: 104%;">
+      <h1></h1>
+      <div class="panel panel-default">
+        <div class="panel-heading" style="height: 48px">Companies List
+          <p class="pull-right"><%= link_to 'Add Company', new_admin_company_path, class: "btn btn-primary btn-sm" %></p></div>
+          <div class="panel-body">
+            <table class="table table-bordered table-striped table-hover" id="companies_list">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Employees count</th>
+                  <th>Established date</th>
+                  <th>Website</th>
+                  <th>Email</th>
+                  <th>Revenue</th>
+                  <th>Company Type</th>
+                  <th style='width: 9%;'>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @companies.each do |company| %>
+                <tr>
+                  <td><%= company.name %></td>
+                  <td><%= company.employees_count %></td>
+                  <td><%= company.established_date %></td>
+                  <td style="width: 280px;" class="wordbreak"><%= company.website %></td>
+                  <td><%= company.email %></td>
+                  <td><%= company.revenue %></td>
+                  <td><%= company.company_type.name if company.company_type %></td>
+                  <td><%= link_to '', '/admin/companies/' + company.id.to_s, class: "btn btn-xs btn-info fa fa-eye", title: "View" %>
+                    <%= link_to '', edit_admin_company_path(company), class: "btn btn-xs btn-warning fa fa-edit", title: "Edit" %>
+                    <%= link_to '', '/admin/companies/' + company.id.to_s, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-xs btn-danger fa fa-trash-o", title: "Delete" %>
+                  </td>
+                </tr>
+                <% end %>
+              </tbody>
+            </table>
+            <div class="pull-right"><%= paginate @companies %></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

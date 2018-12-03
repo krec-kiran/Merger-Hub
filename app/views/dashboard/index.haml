@@ -1,0 +1,6 @@
+= content_for :title do
+  Dashboard
+
+.blog.blog-category.container{"data-ng-app" => "MergerHubDashboard", "style" => "  margin-top: 50px;"}
+  %toaster-container{"toaster-options"=>"{'time-out': 3000}"}
+  %div{"ui-view" => ""}

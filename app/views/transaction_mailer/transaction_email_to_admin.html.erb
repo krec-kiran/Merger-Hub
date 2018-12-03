@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+</head>
+<body>
+  <h4>Dear Admin,</h4>
+  <p>Kindly approve the transaction for the company <%= @transaction.company.name if @transaction.company %>.
+  </p>
+  <p>Regards,</p>
+  <div><%= @user_name %></div>
+</body>
+</html>

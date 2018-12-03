@@ -1,0 +1,70 @@
+<div class="blog blog-category blog-archive container">
+  <div class="blog-category">
+    <div class="row col-lg-12">
+      <h1></h1>
+      <div class="panel panel-default">
+        <div class="panel-heading" style="height: 48px">Transaction List
+        </div>
+          <div class="panel-body">
+            <table class="table table-bordered table-striped table-hover">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Target</th>
+                  <th>Sector</th>
+                  <th>Value</th>
+                  <th>Transaction Type</th>
+                  <th>Investor/Seller</th>
+                  <th>Approve</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @transactions.each do |transaction| %>
+                <tr>
+                  <td><%= transaction.date.strftime("%D") if transaction.date %></td>
+                  <td><%= transaction.target.name %></td>
+                  <td><%= transaction.company.sectors.first.name if transaction.company && transaction.company.sectors.present? %></td>
+                  <td><%= transaction.value %></td>
+                  <td><%= transaction.transaction_type.name %></td>
+                  <% transaction.investors.each do |investor| %>
+                  <td>
+                    <% if investor.buyer && investor.buyer.present? %>
+                      <p><strong>Investor:</strong> <%= investor.buyer.name %></p>
+                    <% end %>
+                    <% if investor.seller && investor.seller.present? %>
+                      <p><strong>Seller:</strong> <%= investor.seller.name if investor.seller.present? %></p>
+                    <% end %>
+                  </td>
+                  <% end %>
+                  <td><input class="is_approve" name="transaction[is_approve]" type="checkbox" value="no" data-transactionid="<%= transaction.id %>" /></td>
+                </tr>
+                <% end %>
+                <% if @transactions.length == 0 %>
+                <tr><td colspan="7">No Record Found.</td></tr>
+                <% end %>
+              </tbody>
+            </table>
+            <div class="pull-right"><%= paginate @transactions %></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  $(".is_approve").change(function() {
+    var result = false;
+    if(this.checked){
+      result = true;
+      toastr.success("Transaction approved successfully");
+    }
+    var request = $.ajax({
+      url: "/admin/transactions/approve_transaction/" + $(this).data("transactionid"),
+      type: "PUT",
+      data: { value : result }
+    });
+    request.done(function(msg) {
+      $("#log").html( msg );
+    });
+  });
+</script>

@@ -1,0 +1,44 @@
+%section.signup-section.access-section.section{:style => "padding-top: 25px;"}
+  .container
+    .row
+      .form-box.col-sm-6.col-md-4.col-md-offset-4
+        = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+          .form-box-inner
+            %h2.text-center Sign up now
+            = devise_error_messages!
+            - role_name = Role.find_by(name: "user")
+            - subscription = User.subscriptions.keys.first
+            = f.hidden_field :role_id, :value => role_name.id if role_name.present?
+            = f.hidden_field :subscription, :value => subscription
+            = f.hidden_field :remaining_days, :value => 59
+            .row
+              .form-container
+                %form.signup-form
+                  .form-group.user_name_icon
+                    = f.text_field :first_name, autofocus: true, class: "form-control", placeholder: "First Name"
+                  / //form-group
+                  .form-group.user_name_icon
+                    = f.text_field :last_name, autofocus: true, class: "form-control", placeholder: "Last Name"
+                  / //form-group
+                  .form-group.email
+                    = f.email_field :email, autofocus: true, class: "form-control", placeholder: "Email"
+                  / //form-group
+                  .form-group.password
+                    = f.password_field :password, autocomplete: "off", class: "form-control", placeholder: "Password"
+                  .form-group.password
+                    = f.password_field :password_confirmation, autocomplete: "off", class: "form-control", placeholder: "Password Confirmation"
+                  / //form-group
+                  .form-group
+                  = f.submit "Sign up", class: "col-md-offset-2 btn btn-success"
+                  %a.btn.btn-warning{:href => "/"} Cancel
+                  / //form-group
+                  %p.note By signing up, you agree to our terms of services and privacy policy.
+                  %p.lead
+                    Already have an account?
+                    %a#login-link.login-link{:href => "/users/sign_in"} Log in
+              / //form-container
+            / //row
+          / //form-box-inner
+      / //form-box
+    / //row
+  / //container

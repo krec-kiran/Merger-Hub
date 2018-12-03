@@ -1,0 +1,20 @@
+.container.w-xxl.w-auto-xs
+.bg-slider-wrapper
+  .flexslider.bg-slider
+    %ul.slides
+      %li.slide.slide-1.flex-active-slide{:style => "width: 100%; float: left; margin-right: -100%; position: relative; opacity: 1; display: block; z-index: 2;"}
+      %li.slide.slide-2{:style => "width: 100%; float: left; margin-right: -100%; position: relative; opacity: 0; display: block; z-index: 1;"}
+      %li.slide.slide-3{:style => "width: 100%; float: left; margin-right: -100%; position: relative; opacity: 0; display: block; z-index: 1;"}
+%section.promo.section.section-on-bg
+  .container.text-center
+    %h2.title
+      Mergers and Acquisitions Portal
+    %p.intro
+      MergerHub is the definitive one stop platform for all things related to Corporate Finance
+      %br One Portal - Many Channels
+    - unless user_signed_in?
+      %p
+        = link_to('Try MergerHub Free', new_user_registration_path, :class =>"btn btn-cta btn-cta-primary")
+  / //container
+.sections-wrapper
+  = yield

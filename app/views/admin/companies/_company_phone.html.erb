@@ -1,0 +1,26 @@
+<%= f.fields_for :phones do |phone| %>
+<div class="form-group">
+  <%= phone.label :mobile, class: "control-label col-sm-4" do %>
+    Mobile
+  <% end %>
+  <div class="col-sm-8">
+    <%= phone.text_field :mobile, class: "form-control" %>
+  </div>
+</div>
+<div class="form-group">
+  <%= phone.label :landline, class: "control-label col-sm-4" do %>
+    Land Line Number
+  <% end %>
+  <div class="col-sm-8">
+    <%= phone.text_field :landline, class: "form-control" %>
+  </div>
+</div>
+<div class="form-group">
+  <%= phone.label :fax, class: "control-label col-sm-4" do %>
+    FAX
+  <% end %>
+  <div class="col-sm-8">
+    <%= phone.text_field :fax, class: "form-control" %>
+  </div>
+</div>
+<% end %>

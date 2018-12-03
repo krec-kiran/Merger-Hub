@@ -1,0 +1,193 @@
+.col-lg-3
+  .panel.panel-default
+    .panel-body
+      .form-group.text-center
+        %label {{organizationDetail.name}}
+        %br
+        %label {{organizationDetail.website}}
+        %br
+        %span {{organizationDetail.address}}
+      %hr
+      %br
+      .form-group{"ng-if" => "organizationDetail.sector_name"}
+        %label Sector
+        %div
+          {{organizationDetail.sector_name}}
+      .form-group{"ng-if" => "organizationDetail.phone"}
+        %label Phone
+        %div
+          {{organizationDetail.phone}}
+      .form-group{"ng-if" => "organizationDetail.established_date"}
+        %label Established
+        %div
+          {{organizationDetail.established_date}}
+      .form-group{"ng-if" => "organizationDetail.email"}
+        %label Email
+        %div
+          {{organizationDetail.email}}
+      .form-group{"ng-if" => "organizationDetail.employees_count"}
+        %label No of Employees
+        %div
+          {{organizationDetail.employees_count}}
+      .form-group
+        %label Revenue
+        %div
+          {{organizationDetail.revenue}}
+      .form-group{"ng-if" => "organizationDetail.hiring || organizationDetail.fund_raising"}
+        %label Status
+        %div
+          {{organizationDetail.hiring}}
+        %div
+          {{organizationDetail.fund_raising}}
+      .form-actions.text-center
+
+.col-lg-9
+  .panel.panel-default
+    .panel-body
+      %tabset.tab-container
+        %tab
+          %tab-heading
+            Profile
+          %div
+            .blog-list.blog-category-list
+              %article.post.col-md-12.col-sm-12.col-xs-12
+                .content
+                  .post-entry
+                    %p {{organizationDetail.summary}}
+        %tab
+          %tab-heading
+            M&A Transactions
+          %div
+            %article.post.col-md-12.col-sm-12.col-xs-12{"ng-if"=>"organizationDetail.company_type != 'Bank'"}
+              .post-inner
+                .content
+                  %h3.post-title
+                    M&A Transaction
+                  %hr
+                    .post-entry
+                      .table-responsive
+                        %table.table.table-striped.b-t.b-light
+                          %thead
+                            %tr
+                              %th{:width => "150"} Date
+                              %th Target
+                              %th{:width => "100"} Sector
+                              %th Value
+                              %th{:width => "200"} Transaction Type
+                              %th{:width => "200"} Investor/Seller
+                          %tbody{"cg-busy"=>"getTransactionpromise"}
+                            %tr{"dir-paginate" => "transaction in transactions | itemsPerPage:5: 'paginateTransaction'", "pagination-id"=>"paginateTransaction"}
+                              %td {{transaction.date}}
+                              %td.pointer{"ng-click" => "gotoOrganizationDetail(transaction.target_id)"} {{transaction.target}}
+                              %td {{transaction.sector}}
+                              %td {{transaction.value}}
+                              %td {{transaction.transaction_type}}
+                              %td
+                                %p.pointer{"ng-if" => "transaction.investor", "ng-click" => "gotoOrganizationDetail(transaction.investor_id)"}
+                                  %b
+                                    Investor
+                                  {{transaction.investor}}
+                                %p.pointer{"ng-if" => "transaction.seller", "ng-click" => "gotoOrganizationDetail(transaction.seller_id)"}
+                                  %b
+                                    Seller
+                                  {{transaction.seller}}
+                            %tr{"ng-if" => "transactions.length == 0"}
+                              %td{"colspan"=>6, "style" =>"text-align:center;"}
+                                No record found
+                          %tfoot
+                            %tr
+                              %td.text-right{"colspan"=>"6"}
+                                %dir-pagination-controls{"pagination-id"=>"paginateTransaction"}
+            %article.post.col-md-12.col-sm-12.col-xs-12{"ng-if"=>"organizationDetail.company_type == 'Bank'"}
+              .post-inner
+                .content
+                  %h3.post-title
+                    M&A Advisory ({{advisorTransactions.length}})
+                  %hr
+                    .post-entry
+                      .table-responsive
+                        %table.table.table-striped.b-t.b-light
+                          %thead
+                            %tr
+                              %th{:width => "150"} Date
+                              %th Client
+                              %th{:width => "100"} Buy/Sell
+                              %th Target
+                              %th{:width => "200"} Sector
+                          %tbody{"cg-busy"=>"getTransactionpromise"}
+                            %tr{"dir-paginate" => "transaction in advisorTransactions | itemsPerPage:10: 'paginateAdvisorTransaction'", "pagination-id"=>"paginateAdvisorTransaction"}
+                              %td {{transaction.date}}
+                              %td {{transaction.client}}
+                              %td {{transaction.buy_or_sell}}
+                              %td.pointer{"ng-click" => "gotoOrganizationDetail(transaction.target_id)"} {{transaction.target}}
+                              %td {{transaction.sector}}
+                            %tr{"ng-if" => "advisorTransactions.length == 0"}
+                              %td{"colspan"=>6, "style" =>"text-align:center;"}
+                                No record found
+                          %tfoot
+                            %tr
+                              %td.text-right{"colspan"=>"6"}
+                                %dir-pagination-controls{"pagination-id"=>"paginateAdvisorTransaction"}
+        %tab
+          %tab-heading
+            Employees
+          %div
+            %article.post.col-md-12.col-sm-12.col-xs-12
+              .post-inner
+                .content
+                  %h3.post-title
+                    Employees
+                  %hr
+                    .post-entry
+                      .table-responsive
+                        %table.table.table-striped.b-t.b-light
+                          %thead
+                            %tr
+                              %th Name
+                              %th Works For
+                              %th Title
+                              %th Sector
+                              %th Email
+                              %th Location
+                          %tbody{"cg-busy"=>"getTransactionpromise"}
+                            %tr{"dir-paginate" => "employee in organizationDetail.employees | itemsPerPage:5: 'paginateAdvisorTransaction'", "pagination-id"=>"paginateAdvisorTransaction"}
+                              %td.pointer{"ng-click" => "gotoOrganizationEmployeeDetail(employee.id)"} {{employee.name}}
+                              %td.pointer{"ng-click" => "redirectOraganizationPage(employee.company_id)" } {{employee.company_name}}
+                              %td {{employee.designation}}
+                              %td {{employee.sector_name}}
+                              %td.pointer
+                                %a{"href"=>"mailto:{{employee.email}}?subject=Mergerhub-Contact"} {{employee.email}}
+                              %td {{employee.city}}
+                            %tr{"ng-if" => "organizationDetail.employees.length == 0"}
+                              %td{"colspan"=>"6", "style" =>"text-align:center;"}
+                                No record found
+                          %tfoot
+                            %tr
+                              %td.text-right{"colspan"=>"6"}
+                                %dir-pagination-controls{"pagination-id"=>"paginateAdvisorTransaction"}
+        %tab
+          %tab-heading
+            Live vacancies
+          %div
+            %article.post.col-md-12.col-sm-12.col-xs-12
+              .post-inner
+                .content
+                  %h3.post-title
+                    Live vacancies
+                  %hr
+                    .post-entry
+                      .table-responsive
+                        %table.table.table-striped.b-t.b-light
+                          %thead
+                            %tr
+                              %th{:width => "150"} Job Title
+                          %tbody{"cg-busy"=>"getTransactionpromise"}
+                            %tr{"dir-paginate" => "job in organizationDetail.jobs | itemsPerPage:5: 'paginateAdvisorTransaction'", "pagination-id"=>"paginateAdvisorTransaction"}
+                              %td.pointer{"ng-click" => "gotoOrganizationJobsDetail(job.id)"} {{job.title}}
+                            %tr{"ng-if" => "organizationDetail.jobs.length == 0"}
+                              %td{"colspan"=>1, "style" =>"text-align:center;"}
+                                No record found
+                          %tfoot
+                            %tr
+                              %td.text-right{"colspan"=>"1"}
+                                %dir-pagination-controls{"pagination-id"=>"paginateAdvisorTransaction"}

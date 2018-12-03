@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @feed.title %>
+</p>
+
+<p>
+  <strong>Url:</strong>
+  <%= @feed.url %>
+</p>
+
+<p>
+  <strong>Image url:</strong>
+  <%= @feed.image_url %>
+</p>
+
+<p>
+  <strong>Entry url:</strong>
+  <%= @feed.entry_url %>
+</p>
+
+<p>
+  <strong>Author:</strong>
+  <%= @feed.author %>
+</p>
+
+<p>
+  <strong>Category:</strong>
+  <%= @feed.category %>
+</p>
+
+<p>
+  <strong>Summary:</strong>
+  <%= @feed.summary %>
+</p>
+
+<p>
+  <strong>Published:</strong>
+  <%= @feed.published %>
+</p>
+
+<%= link_to 'Edit', edit_feed_path(@feed) %> |
+<%= link_to 'Back', feeds_path %>

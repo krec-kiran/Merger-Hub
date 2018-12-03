@@ -1,0 +1,158 @@
+.pointer{
+  cursor: pointer;
+}
+.ui-select-bootstrap > .ui-select-choices{
+  z-index: 1006 !important;
+}
+.btn{
+  font-weight: normal;
+}
+.wrapper{
+  min-height: 100%;
+  overflow: auto;
+}
+.footer{
+  padding-top: 20px;
+  position: relative;
+}
+html{
+  height: 100%;
+}
+body{
+  height: 100%;
+}
+.news-title{
+  color: blue;
+}
+.news-date{
+  color: #999;
+}
+.form-control:hover {
+  border-color: #66afe9;
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+  outline: 0;
+}
+label.error{
+  color: red;
+  font-weight: 100;
+}
+.static-alert{
+  margin: 20px;
+  margin-left: 50%;
+  margin-top: 0%;
+  overflow: auto;
+}
+.error-element{
+  border-color: red;
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 2px red;
+  outline: 0;
+}
+.modal-backdrop.in{
+  opacity: 0.2;
+}
+.fa.fa-star{
+  color: #EF0D1E;
+  font-size: 0.5em;
+  text-shadow: 1px 1px 1px #ccc;
+}
+.font-bold {
+ font-weight: 700;
+}
+
+// CSS for Credit Card Payment form
+.credit-card-box .panel-title {
+    display: inline;
+    font-weight: bold;
+}
+.credit-card-box .form-control.error {
+    border-color: red;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(255,0,0,0.6);
+    outline: 0;
+}
+.credit-card-box label.error {
+  color: red;
+  font-weight: bold;
+  margin-top: 2px;
+  padding: 2px 8px;
+}
+.credit-card-box .payment-errors {
+  color: red;
+  font-weight: bold;
+  margin-top: 2px;
+  padding: 2px 8px;
+}
+.credit-card-box label {
+    display: block;
+}
+.credit-card-box .display-table {
+    display: table;
+}
+.credit-card-box .display-tr {
+    display: table-row;
+}
+.credit-card-box .display-td {
+    display: table-cell;
+    vertical-align: middle;
+    width: 50%;
+}
+.credit-card-box .panel-heading img {
+    min-width: 180px;
+}
+
+.not-active {
+  cursor: default;
+  pointer-events: none;
+}
+
+#toast-container{
+  top: 70px;
+}
+.action-width{
+  width: 11%;
+}
+#dp_swf_engine {
+  display:none;
+}
+.pagination{
+  margin: 5px;
+}
+
+.dropdown-submenu {
+    position: relative;
+}
+
+.dropdown-submenu>.dropdown-menu {
+    top: 0;
+    right: 100%;
+}
+
+.dropdown-submenu:hover>.dropdown-menu {
+    display: block;
+}
+
+.dropdown-submenu>a:after {
+    display: block;
+    content: " ";
+    float: right;
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid;
+    border-width: 5px 0 5px 5px;
+    border-left-color: #ccc;
+    margin-top: 5px;
+    margin-right: -10px;
+}
+.navbar-nav li .dropdown-menu li.dropdown-submenu .dropdown-menu:before{
+  display: none;
+}
+.wordbreak{
+  word-break: break-word;
+}
+.more{
+  display:inline-block;
+  width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

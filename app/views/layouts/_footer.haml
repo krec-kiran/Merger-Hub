@@ -1,0 +1,54 @@
+/ ******FOOTER******
+%footer.footer
+  .footer-content
+    .container
+      .row
+        .footer-col.col-md-offset-6.links
+          .footer-col-inner.col-md-3
+            %h3.title About us
+            %ul.list-unstyled
+              %li
+                %a.not-active{:href => "#"}
+                  %i.fa.fa-caret-right>
+                  Who we are
+              %li
+                %a.not-active{:href => "#"}
+                  %i.fa.fa-caret-right>
+                  Contact us
+          / //footer-col-inner
+          .footer-col-inner.col-md-4
+            %h3.title Support
+            %ul.list-unstyled
+              %li
+                %a.not-active{:href => "#"}
+                  %i.fa.fa-caret-right>
+                  Help
+              %li
+                %a.not-active{:href => "#"}
+                  %i.fa.fa-caret-right>
+                  Terms of services
+              %li
+                %a.not-active{:href => "#"}
+                  %i.fa.fa-caret-right>
+                  Privacy
+          / //footer-col-inner
+          .footer-col-inner.col-md-3
+            .socials
+              %a.btn.twitter.not-active{:href => "https://twitter.com", :target => "_blank"}
+                %i.fa.fa-twitter.fa-lg
+              %a.btn.facebook.not-active{:href => "https://facebook.com", :target => "_blank"}
+                %i.fa.fa-facebook.fa-lg
+          / //footer-col-inner
+        / //foooter-col
+      / //row
+    / //container
+  / //footer-content
+  .bottom-bar
+    .container
+      %small.copyright
+        Copyright @
+        =year()
+        %a{:href => "#", :target => "_blank"} MergerHub
+    / //container
+  / //bottom-bar
+/ //footer

@@ -1,0 +1,142 @@
+<%= javascript_include_tag "admin-candidates" %>
+<div class="col-md-12">
+  <div class="col-md-6">
+    <div class="form-group">
+      <%= f.label :name, class: "control-label col-sm-4" do %>
+      Name <i class="fa fa-star"></i>
+      <% end %>
+      <div class="col-sm-8">
+        <%= f.text_field :name, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :email, class: "control-label col-sm-4" do %>
+      Email
+      <% end %>
+      <div class="col-sm-8">
+        <%= f.email_field :email, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :street, class: "control-label col-sm-4" do %>
+      Street
+      <% end %>
+      <div class="col-sm-8">
+        <%= f.text_field :street, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :city, class: "control-label col-sm-4" do %>
+      City <i class="fa fa-star"></i>
+      <% end %>
+      <div class="col-sm-8">
+        <%= f.text_field :city, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :state, class: "control-label col-sm-4" do %>
+      State
+      <% end %>
+      <div class="col-sm-8">
+        <%= f.text_field :state, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :country, class: "control-label col-sm-4" do %>
+      Country
+      <% end %>
+      <div class="col-sm-8">
+        <%= f.text_field :country, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :language, class: "control-label col-sm-4" do %>
+      Language
+      <% end %>
+      <div class="col-sm-8">
+        <%= f.text_field :language, class: "form-control", 'data-role' => "tagsinput" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :company_id, class: "control-label col-sm-4" do %>
+      Company <i class="fa fa-star"></i>
+      <% end %>
+      <div class="col-sm-8">
+        <%= f.select(:company_id, Company.all.collect {|u| [u.name, u.id]}, { :prompt => 'Please Select'} , { class: "form-control" }) %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :designation, class: "control-label col-sm-4" %>
+      <div class="col-sm-8">
+        <%= f.text_field :designation, class: "form-control" %>
+      </div>
+    </div>
+    </div>
+    <div class="col-md-6">
+    <div class="form-group">
+      <%= f.label 'Profile', class: "control-label col-sm-4" %>
+      <div class="col-sm-8">
+        <%= f.text_area :bio, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label 'Skills', class: "control-label col-sm-4" %>
+      <div class="col-sm-8">
+        <%= f.text_field :skills, class: "form-control", 'data-role' => "tagsinput" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :work_history, class: "control-label col-sm-4" %>
+      <div class="col-sm-8">
+        <%= f.text_field :work_history, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label 'Industry Speciality', class: "control-label col-sm-4" %>
+      <div class="col-sm-8">
+        <%= f.text_field :industry_specialty, class: "form-control" %>
+      </div>
+    </div>
+     <div class="form-group">
+      <%= f.label :board_member, class: "control-label col-sm-4" %>
+      <div class="col-sm-8">
+        <%= f.text_field :board_member, class: "form-control" %>
+      </div>
+    </div>
+     <div class="form-group">
+      <%= f.label :education, class: "control-label col-sm-4" %>
+      <div class="col-sm-8">
+        <%= f.text_field :education, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :phone, class: "control-label col-sm-4" do %>
+      Phone
+      <% end %>
+      <div class="col-sm-8">
+        <%= f.text_field :phone, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :joined, class: "control-label col-sm-4" %>
+      <div class="col-sm-8">
+        <%= f.text_field :joined, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :pin_code, class: "control-label col-sm-4" do %>
+      Pin code
+      <% end %>
+      <div class="col-sm-8">
+        <%= f.text_field :pin_code, class: "form-control" %>
+      </div>
+    </div>
+    </div>
+  </div>
+
+<div class="form-group">
+  <div class="col-sm-offset-4 col-sm-5">
+    <%= f.submit 'Save', class: "btn btn-success" %>
+    <%= link_to 'Back', admin_candidates_path, class: "btn btn-default" %>
+  </div>
+</div>

@@ -1,0 +1,80 @@
+<%= javascript_include_tag "user-transaction" %>
+<div class="blog blog-category blog-archive container">
+  <div class="blog-category">
+    <div class="row col-lg-12">
+      <h1></h1>
+      <div class="panel panel-default">
+        <div class="panel-heading">New Transaction
+        </div>
+        <div class="panel-body">
+          <div class="col-md-12">
+            <%= form_for(@transaction, url: {action: "create"}, html:{ class: "user-transaction form-horizontal" }) do |f| %>
+            <div class="col-md-6">
+              <div class="form-group">
+                <%= f.label :target_id, class: "control-label col-sm-4" do %>
+                Target Company <i class="fa fa-star"></i>
+                <% end %>
+                <div class="col-sm-8">
+                  <%= hidden_field_tag 'person_id', params[:person_id] %>
+                  <%= f.hidden_field :company_id, value: params[:company_id] %>
+                  <%= f.select(:target_id, Company.all.collect {|u| [u.name, u.id]}, { :prompt => 'Please Select'} , { class: "form-control" }) %>
+                </div>
+              </div>
+              <div class="form-group">
+                <%= f.label :date, class: "control-label col-sm-4" do %>
+                Date <i class="fa fa-star"></i>
+                <% end %>
+                <div class="col-sm-8">
+                  <%= f.date_field :date, class: "form-control", max: Date.today.to_s %>
+                </div>
+              </div>
+              <div class="form-group">
+                <%= f.label :value, class: "control-label col-sm-4" do %>
+                Value <i class="fa fa-star"></i>
+                <% end %>
+                <div class="col-sm-8">
+                  <%= f.text_field :value, class: "form-control" %>
+                </div>
+              </div>
+              <div class="form-group">
+                <%= f.label :transaction_type_id, class: "control-label col-sm-4" do %>
+                Transaction Type <i class="fa fa-star"></i>
+                <% end %>
+                <div class="col-sm-8">
+                  <%= f.select(:transaction_type_id, TransactionType.all.collect {|u| [u.name, u.id]}, { :prompt => 'Please Select'} , { class: "form-control" }) %>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <%= f.fields_for :investors do |investor| %>
+              <div class="form-group">
+                <%= investor.label :buyer_id, class: "control-label col-sm-4" do %>
+                Investor
+                <% end %>
+                <div class="col-sm-8">
+                  <%= investor.select(:buyer_id, Company.all.collect {|u| [u.name, u.id]}, { :prompt => 'Please Select'} , { class: "form-control" }) %>
+                </div>
+              </div>
+              <div class="form-group">
+                <%= investor.label :seller_id, class: "control-label col-sm-4" do %>
+                Seller
+                <% end %>
+                <div class="col-sm-8">
+                  <%= investor.select(:seller_id, Company.all.collect {|u| [u.name, u.id]}, { :prompt => 'Please Select'} , { class: "form-control" }) %>
+                </div>
+              </div>
+              <% end %>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-4 col-sm-5">
+              <%= f.submit 'Save', class: "btn btn-success"%>
+              <%= link_to 'Back', "/candidates#/" + params[:person_id] + "/detail", class: "btn btn-default" %>
+            </div>
+          </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

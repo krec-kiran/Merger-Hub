@@ -1,0 +1,86 @@
+/ ******HEADER******
+%header#header.header.header-blog
+  .container
+    %h1.logo
+      %a{:href => "/dashboard"} MergerHub
+    / //logo
+    %nav.main-nav.navbar-right{:role => "navigation"}
+      .navbar-header
+        %button.navbar-toggle{"data-target" => "#navbar-collapse", "data-toggle" => "collapse", :type => "button"}
+          %span.sr-only Toggle navigation
+          %span.icon-bar
+          %span.icon-bar
+          %span.icon-bar
+        / //nav-toggle
+      / //navbar-header
+      #navbar-collapse.navbar-collapse.collapse
+        %ul.nav.navbar-nav
+          - if user_signed_in?
+            %li.nav-item{ "class"=> "#{controller_name == "dashboard" ? 'active' : ''}"}
+              %a{:href => "/dashboard"} Dashboard
+            %li.nav-item{ "class"=> "#{controller_name == "news" ? 'active' : ''}"}
+              %a{:href => "/news#/1/entries"}
+                News
+            %li.nav-item.dropdown{ "class"=> "#{controller_name == "candidates" || controller_name == "organization"  ? 'active' : ''}"}
+              %a.dropdown-toggle{"data-close-others" => "false", "data-delay" => "0", "data-hover" => "dropdown", "data-toggle" => "dropdown", :href => "#"}
+                Network
+                %i.fa.fa-angle-down
+              %ul.dropdown-menu
+                %li
+                  %a{:href => "/candidates#/search"} People
+                %li
+                  %a{:href => "/organization#/search"} Organizations
+            %li.nav-item{ "class"=> "#{controller_name == "transactions" ? 'active' : ''}"}
+              %a{:href => "/transactions#/search" } Transactions
+            %li.nav-item{ "class"=> "#{controller_name == "job_portals" ? 'active' : ''}"}
+              %a{:href => job_portals_path } Careers
+            %li.nav-item.dropdown{ "class"=> "#{controller_name == "users" ? 'active' : ''}"}
+              %a.dropdown-toggle{"data-close-others" => "false", "data-delay" => "0", "data-hover" => "dropdown", "data-toggle" => "dropdown", :href => "#"}
+                - candidate = Candidate.find_by(email: current_user.email)
+                -if current_user.candidate.present? && current_user.candidate.avatar.present?
+                  = image_tag(current_user.candidate.avatar.url, size: "30",  style: "border-radius: 50px;")
+                - elsif candidate && candidate.avatar_file_name.present?
+                  = image_tag(candidate.avatar.url, size: "30",  style: "border-radius: 50px;")
+                - else
+                  = image_tag('missing_medium.jpg', size: "30",  style: "border-radius: 50px;")
+                = current_user.full_name if current_user
+                %i.fa.fa-angle-down
+              %ul.dropdown-menu
+                %li
+                  = link_to('Account', edit_user_registration_path)
+                %li
+                  - if current_user.candidate.present?
+                    = link_to('Profile', "/candidates#/#{current_user.candidate.id}/detail")
+                  - else
+                    - candidate = Candidate.find_by(email: current_user.email)
+                    = link_to('Profile', "/candidates#/#{candidate.id}/detail") if candidate.present?
+                - if current_user.role_name == "admin"
+                  %li.dropdown-submenu
+                    %a{:href => "#"} Admin pages
+                    %ul.dropdown-menu
+                      %li
+                        %a{:href => admin_companies_path } Companies
+                      %li
+                        %a{:href => admin_candidates_path } Candidate
+                      %li
+                        %a{:href => admin_sites_path } News
+                      %li
+                        %a{:href => admin_sectors_path } Sectors
+                      %li
+                        %a{:href => admin_job_portals_path } Careers
+                      %li
+                        %a{:href => admin_transactions_path } Transactions
+                %li
+                  = link_to('Logout', destroy_user_session_path, :method => :delete)
+          - else
+            %li.nav-item
+              = link_to('Pricing', pricing_path)
+            %li.nav-item
+              = link_to('Login', new_user_session_path)
+            %li.nav-item.nav-item-cta.last
+              = link_to('Sign Up Free', new_user_registration_path, :class =>"btn btn-cta btn-cta-secondary")
+        / //nav
+      / //navabr-collapse
+    / //main-nav
+  / //container
+/ //header

@@ -1,0 +1,2 @@
+module JobPortalsHelper
+end

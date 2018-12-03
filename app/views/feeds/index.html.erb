@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Feeds</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Url</th>
+      <th>Image url</th>
+      <th>Entry url</th>
+      <th>Author</th>
+      <th>Category</th>
+      <th>Summary</th>
+      <th>Published</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @feeds.each do |feed| %>
+      <tr>
+        <td><%= feed.title %></td>
+        <td><%= feed.url %></td>
+        <td><%= feed.image_url %></td>
+        <td><%= feed.entry_url %></td>
+        <td><%= feed.author %></td>
+        <td><%= feed.category %></td>
+        <td><%= feed.summary %></td>
+        <td><%= feed.published %></td>
+        <td><%= link_to 'Show', feed %></td>
+        <td><%= link_to 'Edit', edit_feed_path(feed) %></td>
+        <td><%= link_to 'Destroy', feed, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Feed', new_feed_path %>

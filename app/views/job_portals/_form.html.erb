@@ -1,0 +1,83 @@
+<div class="blog blog-category blog-archive container">
+  <div class="blog-category">
+    <div class="row col-lg-12">
+      <h1></h1>
+      <div class="panel panel-default">
+        <div class="panel-heading">New Job
+        </div>
+        <div class="panel-body">
+          <div class="col-md-12">
+            <%= form_for(@job_portal, html:{ class: "edit-validation form-horizontal" }) do |f| %>
+            <div class="col-md-6">
+              <%= f.hidden_field :user_id, value: current_user.id %>
+              <div class="form-group">
+                <%= f.label :company_id, class: "control-label col-sm-4" do %>
+                Company Name <i class="fa fa-star"></i>
+                <% end %>
+                <div class="col-sm-8">
+                  <%= f.select(:company_id, Company.all.collect {|u| [u.name, u.id]}, { :prompt => 'Please Select'} , { class: "form-control" }) %>
+                </div>
+              </div>
+              <div class="form-group">
+                <%= f.label :title, class: "control-label col-sm-4" do %>
+                Title <i class="fa fa-star"></i>
+                <% end %>
+                <div class="col-sm-8">
+                  <%= f.text_field :title, class: "form-control" %>
+                </div>
+              </div>
+              <div class="form-group">
+                <%= f.label :sector_name, class: "control-label col-sm-4" do %>
+                Sector
+                <% end %>
+                <div class="col-sm-8">
+                  <%= f.select :sector_name,  options_for_select( [['Buy side', 'buy_side'],['Sell side', 'sell_side'],['Corporate', 'corporate']], @job_portal.sector_name ), {:prompt => "Please Select"},html_options = {:class => "form-control"}%>
+                </div>
+              </div>
+              <div class="form-group">
+                <%= f.label :geo_id, class: "control-label col-sm-4" do %>
+                Geography
+                <% end %>
+                <div class="col-sm-8">
+                  <%= f.select(:geo_id, Geo.all.collect {|u| [u.name, u.id]}, { :prompt => 'Please Select'} , { class: "form-control" }) %>
+                </div>
+              </div>
+              <div class="form-group">
+                <%= f.label :summary, class: "control-label col-sm-4" do %>
+                Summary <i class="fa fa-star"></i>
+                <% end %>
+                <div class="col-sm-8">
+                  <%= f.text_area :summary, class: "form-control" %>
+                </div>
+              </div>
+              <div class="form-group">
+                <%= f.label :requirement, class: "control-label col-sm-4" do %>
+                Requirement <i class="fa fa-star"></i>
+                <% end %>
+                <div class="col-sm-8">
+                  <%= f.text_area :requirement, class: "form-control" %>
+                </div>
+              </div>
+              <div class="form-group">
+                <%= f.label :email, class: "control-label col-sm-4" do %>
+                Email <i class="fa fa-star"></i>
+                <% end %>
+                <div class="col-sm-8">
+                  <%= f.text_field :email, class: "form-control" %>
+                </div>
+              </div>
+            </div>
+            <%= render 'job_location', f: f %>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-4 col-sm-5">
+              <%= f.submit 'Save', class: "btn btn-success"%>
+              <%= link_to 'Back', job_portals_path, class: "btn btn-default" %>
+            </div>
+          </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

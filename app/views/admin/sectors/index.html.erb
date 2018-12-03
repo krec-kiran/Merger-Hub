@@ -1,0 +1,36 @@
+<div class="blog blog-category blog-archive container">
+  <div class="blog-category">
+    <div class="row col-lg-12">
+      <h1></h1>
+      <div class="panel panel-default">
+        <div class="panel-heading" style="height: 48px">Sector List
+          <p class="pull-right"><%= link_to 'Add Sector', new_admin_sector_path, class: "btn btn-primary btn-sm" %></p></div>
+          <div class="panel-body">
+            <table class="table table-bordered table-striped table-hover">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @sectors.each do |sector| %>
+                <tr>
+                  <td><%= sector.name %></td>
+                  <td><%= link_to '', '/admin/sectors/' + sector.id.to_s, class: "btn btn-xs btn-info fa fa-eye", title: "View" %>
+                    <%= link_to '', edit_admin_sector_path(sector), class: "btn btn-xs btn-warning fa fa-edit", title: "Edit" %>
+                    <%= link_to '', '/admin/sectors/' + sector.id.to_s, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-xs btn-danger fa fa-trash-o", title: "Delete" %>
+                  </td>
+                </tr>
+                <% end %>
+                <% if @sectors.length == 0 %>
+                <tr><td>No Record Found.</td></tr>
+                <% end %>
+              </tbody>
+            </table>
+            <div class="pull-right"><%= paginate @sectors %></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

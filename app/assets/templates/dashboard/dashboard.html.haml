@@ -1,0 +1,122 @@
+.row
+  .col-lg-8{:style => "padding-top: 40px;"}
+    .panel.panel-default
+      .panel-heading.font-bold
+        Recent Deals
+      .table-responsive{"cg-busy"=>"recentDealsPromise"}
+        %table.table.table-striped.b-t.b-light
+          %thead
+            %tr
+              %th{:width => "100"} Date
+              %th Target
+              %th Transaction type
+              %th Value
+              %th{:width => "200"} Investors/Sellers
+          %tbody
+            %tr{"dir-paginate" => "recentdeal in recentDeals | itemsPerPage:3: 'paginaterecentDeals'", "pagination-id"=>"paginaterecentDeals"}
+              %td {{recentdeal.date}}
+              %td.pointer{"ng-click" => "redirectOraganizationPage(recentdeal.target_id)"} {{recentdeal.target}}
+              %td {{recentdeal.transaction_type}}
+              %td {{recentdeal.value}}
+              %td
+                %p.pointer{"ng-if" => "recentdeal.investor", "ng-click" => "redirectOraganizationPage(recentdeal.buyer_id)"}
+                  %b
+                    Investor
+                  {{recentdeal.investor}}
+                %p.pointer{"ng-if" => "recentdeal.seller", "ng-click" => "redirectOraganizationPage(recentdeal.seller_id)"}
+                  %b
+                    Seller
+                  {{recentdeal.seller}}
+            %tr{"ng-if" => "recentDeals.length == 0"}
+              %td{"colspan"=>5, "style" =>"text-align:center;"}
+                No record found
+          %tfoot
+            %tr
+              %td.text-right{"colspan"=>"5"}
+                %dir-pagination-controls{"pagination-id"=>"paginaterecentDeals"}
+
+    .panel.panel-default
+      .panel-body
+        %tabset.tab-container{"id"=>"dashboard-tabs"}
+          %tab{"id"=>"firms","ng-click" => "firmsInvestments()"}
+            %tab-heading
+              Top Firms
+            %div
+              .row{"class" => "text-center"}
+                %br
+                %a.btn.btn-default{"ng-click" => "redirecttopFirmInvestmentsPage()", "ng-class"=>"{ active: isActive('/top_firm_investment') }" }
+                  INVESTMENTS
+                %a.btn.btn-default{"ng-click" => "redirecttopFirmExitsPage()", "ng-class"=>"{ active: isActive('/top_firm_exit') }" }
+                  EXITS
+              %br
+              %div{"ui-view" => "topFirms", "ng-animate" => ""}
+
+          %tab{"id"=>"corporates", "ng-click" => "corporateInvestments()"}
+            %tab-heading
+              Top Corporates
+            %div
+              .row{"class" => "text-center"}
+                %br
+                %a.btn.btn-default{ "ng-click" => "redirecttopCorporateInvestmentsPage()", "ng-class"=>"{ active: isActive('/top_corporate_investment') }"}
+                  INVESTMENTS
+                %a.btn.btn-default{ "ng-click" => "redirecttopCorporateExitPage()", "ng-class"=>"{ active: isActive('/top_corporate_exit') }"}
+                  EXITS
+              %br
+              %div{"ui-view" => "topCorporates", "ng-animate" => ""}
+
+          %tab{"id"=>"banks", "ng-click" => "bankMAEngagements()"}
+            %tab-heading
+              Top Banks
+            %div
+              .row{"class" => "text-center"}
+              %br
+              %div{"ui-view" => "bankEngagement", "ng-animate" => ""}
+
+          %tab{"id"=>"lawFirms","ng-click" => "lawFirms()"}
+            %tab-heading
+              Top Law Firms
+            %div
+              .row{"class" => "text-center"}
+              %br
+              %div{"ui-view" => "lawFirm", "ng-animate" => ""}
+
+
+  .col-lg-4{:style => "padding-top: 40px;"}
+    .panel.panel-default
+      .panel-heading.font-bold
+        Latest News
+      .panel-body{"cg-busy"=>"latestNewsPromise", "style" => "padding-bottom: 0px;"}
+        .table-responsive
+          %table.table.table-hover{ "style" => "margin-bottom: 0px;"}
+            %tbody
+              %tr{"dir-paginate" => "entry in entries | itemsPerPage:5: 'paginateentry'", "pagination-id"=>"paginateentry"}
+                %td
+                  %a.news-title{:href => "{{entry.url}}", "target"=> "_blank"}
+                    {{entry.title}} - {{entry.site_name}}
+                  %div.news-date
+                    {{entry.published | date: 'MMMM, dd yyyy'}}
+            %tfoot
+              %tr
+                %td.text-right
+                  %dir-pagination-controls{"pagination-id"=>"paginateentry"}
+
+    .panel.panel-default
+      .panel-heading.font-bold
+        Live vacancies
+      .panel-body{"cg-busy"=>"latestNewsPromise", "style" => "padding-bottom: 0px;"}
+        .table-responsive
+          %table.table.table-hover{ "style" => "margin-bottom: 0px;"}
+            %tbody
+              %tr{"dir-paginate" => "vacancy in vacancies | itemsPerPage:4: 'paginatevacancies'", "pagination-id"=>"paginatevacancies"}
+                %td
+                  %a.news-title{:href => "/job_portals/{{vacancy.id}}", "target"=> "_blank"}
+                    {{vacancy.title}}
+                  %div.news-date
+                    {{vacancy.updated_at | date: 'MMMM, dd yyyy'}}
+                  %div
+                    {{vacancy.summary | limitTo:50}}...
+            %tfoot
+              %tr
+                %td.text-right
+                  %dir-pagination-controls{"pagination-id"=>"paginatevacancies"}
+

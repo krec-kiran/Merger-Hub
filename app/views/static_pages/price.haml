@@ -1,0 +1,53 @@
+%section#gotopricepage.pricing.section.section-on-bg
+  .container
+    %h2.title.text-center
+      60 day
+      %span.highlight FREE
+      trial with all plans!
+    %p.intro.text-center Our pricing is simple and you can cancel or change your plan at any time.
+    .price-cols.row
+      .items-wrapper.col-md-10.col-sm-12.col-xs-12.col-md-offset-1.col-sm-offset-0.col-xs-offset-0
+        .item.price-1.col-md-4.col-sm-4.col-xs-12.text-center
+
+        / //item
+        .item.price-2.col-md-4.col-sm-4.col-xs-12.text-center.best-buy
+          .item-inner
+            .heading
+              %h3.title Professional
+              %p.price-figure
+                %span.price-figure-inner
+                  %span.currency $
+                  %span.number 25
+                  %br
+                    %span.unit per month
+            .content
+              %ul.list-unstyled.feature-list
+                %li
+                  %i.fa.fa-check>
+                  Unlimited user
+                %li
+                  %i.fa.fa-check>
+                  Email priority support
+                %li
+                  %i.fa.fa-check>
+                  Free update
+                %li
+                  %i.fa.fa-check>
+                  24/7 support
+              = link_to "Pay $25" ,new_payment_path(:plan => Payment.plans.keys[1]), class: "btn btn-cta btn-cta-primary"
+            / //content
+            .ribbon
+              .text Popular
+            / //ribbon
+          / //item-inner
+        / //item
+        .item.price-3.col-md-4.col-sm-4.col-xs-12.text-center
+        / //item
+      / //items-wrapper
+    / //row
+  / //container
+
+:javascript
+  $(document).ready(function() {
+    $('#gotopricepage').scrollView();
+  });
